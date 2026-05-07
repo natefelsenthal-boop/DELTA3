@@ -6,701 +6,76 @@
     <title>CORE</title>
     <style>
         :root {
-            --bg: #000000;
-            --surface: #0A0A0A;
-            --accent: #D4AF37; 
-            --text-main: #FFFFFF;
-            --text-dim: #666666;
-            --border: #1A1A1A;
-            --card-bg: #0F0F0F;
-            --success: rgba(40, 167, 69, 0.3);
-            --fail: rgba(220, 53, 69, 0.3);
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background: var(--bg); color: var(--text-main); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            margin: 0; padding: 0 0 120px 0; overflow-x: hidden; 
-        }
-
-        header { padding: 40px 20px 20px 20px; position: relative; }
-        .logo { font-size: 3rem; font-weight: 900; letter-spacing: 4px; color: var(--accent); margin: 0; }
-        .motto { font-size: 10px; color: var(--accent); margin-top: 10px; text-transform: uppercase; letter-spacing: 1.5px; width: 75%; font-weight: bold; }
-        
-        .days-left { position: absolute; top: 45px; right: 20px; text-align: right; }
-        .days-val { font-size: 2.2rem; font-weight: 900; display: block; line-height: 1; }
-        .days-lbl { font-size: 8px; text-transform: uppercase; color: var(--text-dim); }
-
-        /* AI CONSOLE */
-        .ai-console { background: var(--surface); border: 1px solid var(--accent); margin: 0 20px 20px 20px; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); }
-        .ai-header { font-size: 10px; color: var(--accent); font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; }
-        .ai-text { font-size: 13px; line-height: 1.6; color: #EEE; font-style: italic; min-height: 40px; }
-
-        /* CALENDAR WITH STRIPES */
-        .calendar-wrap { display: flex; gap: 10px; overflow-x: auto; padding: 20px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); scrollbar-width: none; }
-        .calendar-wrap::-webkit-scrollbar { display: none; }
-        .date-card { 
-            min-width: 65px; height: 85px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; 
-        }
-        .date-card.selected { border: 2px solid var(--accent); transform: scale(1.05); z-index: 5; }
-        .stripe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; opacity: 0.5; }
-        .stripe { flex: 1; width: 100%; }
-        .date-content { z-index: 2; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
-
-        /* PROGRESS */
-        .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 20px 20px; }
-        .prog-card { background: var(--surface); padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
-        .bar-bg { width: 100%; height: 8px; background: #000; border-radius: 10px; margin-top: 10px; overflow: hidden; border: 1px solid var(--border); }
-        .bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        /* WORKOUTS */
-        .workout-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin: 0 20px 20px 20px; overflow: hidden; }
-        .w-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; }
-        .w-day { color: var(--accent); font-size: 1.4rem; font-weight: 900; text-transform: uppercase; }
-        .w-split { color: var(--text-dim); font-size: 10px; font-weight: bold; margin-top: 4px; text-transform: uppercase; }
-        .lift-row { padding: 15px 20px; border-bottom: 1px solid #111; }
-        .ref-txt { font-size: 9px; color: var(--text-dim); margin-bottom: 5px; font-style: italic; }
-        .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; align-items: center; }
-        input { background: transparent; border: none; border-bottom: 1px solid #222; color: #FFF; padding: 5px 0; outline: none; width: 100%; font-family: inherit; }
-
-        /* ITEM CARDS */
-        .item-card { background: var(--surface); border: 1px solid var(--border); margin: 0 20px 10px 20px; padding: 20px; display: flex; align-items: center; border-radius: 8px; }
-        .check-box { width: 22px; height: 22px; border: 1.5px solid #333; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
-        .check-box.done { background: var(--accent); border-color: var(--accent); box-shadow: inset 0 0 0 3px var(--surface); }
-
-        /* UI */
-        .btn-prime { background: var(--accent); color: #000; border: none; padding: 18px; width: calc(100% - 40px); margin: 10px 20px; font-weight: 900; text-transform: uppercase; border-radius: 4px; }
-        nav { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: space-around; padding: 20px 0 40px 0; border-top: 1px solid var(--border); z-index: 100; backdrop-filter: blur(10px); }
-        .nav-btn { background: none; border: none; color: var(--text-dim); font-size: 10px; font-weight: 900; text-transform: uppercase; }
-        .nav-btn.active { color: var(--accent); }
-        .page { display: none; }
-        .page.active { display: block; }
-        .vault { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 20px; }
-        .vault img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--border); border-radius: 4px; }
-        textarea { width: 100%; height: 120px; background: var(--surface); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 8px; font-family: inherit; outline: none; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="logo">FORGE</div>
-    <div id="motto-disp" class="motto">SYSTEM STANDBY</div>
-    <div class="days-left"><span class="days-val" id="countdown">0</span><span class="days-lbl">Days Left</span></div>
-</header>
-
-<div class="calendar-wrap" id="calendar"></div>
-
-<div class="progress-grid">
-    <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">INTEGRITY</div><div class="bar-bg"><div id="h-bar" class="bar-fill"></div></div></div>
-    <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">FUEL</div><div class="bar-bg"><div id="e-bar" class="bar-fill"></div></div></div>
-</div>
-
-<div id="page-ai" class="page active">
-    <div class="ai-console">
-        <div class="ai-header">SYSTEM_OPERATOR_v3</div>
-        <div id="ai-text" class="ai-text">History loaded. Awaiting performance analysis.</div>
-    </div>
-    <button class="btn-prime" onclick="runAI()">RUN SYSTEM CHECK</button>
-</div>
-
-<div id="page-lift" class="page">
-    <div id="workout-list"></div>
-</div>
-
-<div id="page-habits" class="page">
-    <div id="habit-list"></div>
-</div>
-
-<div id="page-eating" class="page">
-    <div id="eating-list"></div>
-    <div style="padding: 20px;">
-        <label style="font-size: 9px; color: var(--accent); font-weight: 900;">MEAL NOTES</label>
-        <textarea id="meal-notes" placeholder="Describe your macros..."></textarea>
-        <button class="btn-prime" style="margin: 20px 0; width: 100%;" onclick="analyzeFuel()">ANALYZE FUEL QUALITY</button>
-        <button class="btn-prime" style="margin: 0; background: #1A1A1A; color: white;" onclick="triggerCam('meals')">+ ADD MEAL PHOTO</button>
-    </div>
-    <div id="meal-vault" class="vault"></div>
-</div>
-
-<div id="page-vault" class="page">
-    <button class="btn-prime" onclick="triggerCam('progress')">+ ADD PROGRESS PHOTO</button>
-    <div id="progress-vault" class="vault" style="margin-top: 20px;"></div>
-</div>
-
-<div id="page-settings" class="page">
-    <div style="padding: 20px;">
-        <label style="font-size: 9px; color: var(--accent); font-weight: 900;">MANAGE SYSTEM</label>
-        <input type="text" id="motto-in" placeholder="Edit Motto" style="margin-bottom: 20px;">
-        <button class="btn-prime" onclick="saveMotto()" style="margin: 0 0 40px 0; width: 100%;">SAVE MOTTO</button>
-        <button onclick="localStorage.clear(); location.reload();" style="color:red; background:none; border:none; width:100%; font-weight:bold; font-size:10px;">ERASE ALL DATA</button>
-    </div>
-</div>
-
-<input type="file" id="cam" accept="image/*" capture="camera" style="display:none">
-
-<nav>
-    <button class="nav-btn active" onclick="tab('ai', this)">AI</button>
-    <button class="nav-btn" onclick="tab('lift', this)">Lift</button>
-    <button class="nav-btn" onclick="tab('habits', this)">Habits</button>
-    <button class="nav-btn" onclick="tab('eating', this)">Eating</button>
-    <button class="nav-btn" onclick="tab('vault', this)">Vault</button>
-    <button class="nav-btn" onclick="tab('settings', this)">Set</button>
-</nav>
-
-<script>
-    const API_KEY = "KvTw"; 
-    let selectedDate = new Date().toDateString();
-
-    let db = JSON.parse(localStorage.getItem('forge_elite_final')) || {
-        motto: "MAKE HARD DECISIONS",
-        habits: ["Drink 2L Water", "No Social Media", "50 Push Ups", "No Soda"],
-        eating: ["No Junk Food", "No Seconds", "No Fried Food"],
-        splits: {"Tuesday": "Shoulders + Tris", "Wednesday": "Back + Bis", "Sunday": "Chest + Tris"},
-        exercises: {"Shoulders + Tris": ["Overhead Press"], "Back + Bis": ["Lat Pulldowns", "Curls"], "Chest + Tris": ["Bench Press"]},
-        dailyData: {}
-    };
-
-    function getDay(d) {
-        if(!db.dailyData[d]) db.dailyData[d] = { habits: db.habits.map(t=>({t, d:false})), eating: db.eating.map(t=>({t, d:false})), lifts: {}, fuelPct: 0, mealNotes: "", photos: [], meals: [] };
-        return db.dailyData[d];
-    }
-
-    function save() { localStorage.setItem('forge_elite_final', JSON.stringify(db)); render(); }
-
-    async function callAI(prompt) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-        const res = await fetch(url, { method: 'POST', body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
-        const data = await res.json();
-        return data.candidates[0].content.parts[0].text;
-    }
-
-    async function runAI() {
-        const day = getDay(selectedDate);
-        const prompt = `Act as an aggressive drill sergeant. Goal: "${db.motto}". Progress: ${day.habits.filter(h=>h.d).length}/${day.habits.length} habits. Give 1 brutal critique and 1 new motto. Format: Critique | Motto`;
-        const result = await callAI(prompt);
-        const [c, m] = result.split('|');
-        document.getElementById('ai-text').innerText = c.trim();
-        db.motto = m.trim(); save();
-    }
-
-    async function analyzeFuel() {
-        const notes = document.getElementById('meal-notes').value;
-        const prompt = `Rate this diet out of 100 for fitness: "${notes}". Respond ONLY with the number.`;
-        const score = await callAI(prompt);
-        const day = getDay(selectedDate);
-        day.fuelPct = parseInt(score.trim()) || 0;
-        day.mealNotes = notes; save();
-    }
-
-    function tab(id, btn) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('page-'+id).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function updateLift(split, ex, field, val) {
-        const day = getDay(selectedDate);
-        if(!day.lifts[split]) day.lifts[split] = {};
-        if(!day.lifts[split][ex]) day.lifts[split][ex] = {w:'', r:''};
-        day.lifts[split][ex][field] = val;
-        save();
-    }
-
-    function triggerCam(target) { window.camTarget = target; document.getElementById('cam').click(); }
-    document.getElementById('cam').onchange = function(e) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const day = getDay(selectedDate);
-            if(window.camTarget === 'progress') day.photos.unshift(reader.result);
-            else day.meals.unshift(reader.result);
-            save();
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
-
-    function findLastLift(split, ex) {
-        const dates = Object.keys(db.dailyData).sort((a,b) => new Date(b) - new Date(a));
-        for(let d of dates) {
-            if(d === selectedDate) continue;
-            const s = db.dailyData[d].lifts[split];
-            if(s && s[ex] && s[ex].w) return `${s[ex].w}lbs x ${s[ex].r}`;
-        }
-        return "Baseline";
-    }
-
-    function render() {
-        const day = getDay(selectedDate);
-        document.getElementById('motto-disp').innerText = db.motto;
-        document.getElementById('meal-notes').value = day.mealNotes;
-        
-        // Progress Bars
-        const hPct = (day.habits.filter(h=>h.d).length / day.habits.length) * 100;
-        document.getElementById('h-bar').style.width = hPct + '%';
-        document.getElementById('e-bar').style.width = day.fuelPct + '%';
-
-        // Calendar
-        const cal = document.getElementById('calendar');
-        const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-        let html = '';
-        const now = new Date();
-        for(let i = -7; i < 7; i++) {
-            const d = new Date(); d.setDate(now.getDate() + i);
-            const dStr = d.toDateString();
-            const dD = getDay(dStr);
-            
-            const hasL = Object.values(dD.lifts).some(s => Object.values(s).some(l => l.w));
-            const hC = (dD.habits.filter(h=>h.d).length / dD.habits.length) >= 0.7 ? 'var(--success)' : 'var(--fail)';
-            const fC = dD.fuelPct >= 70 ? 'var(--success)' : 'var(--fail)';
-            const lC = hasL ? 'var(--success)' : 'var(--fail)';
-
-            html += `
-            <div class="date-card ${dStr === selectedDate ? 'selected' : ''}" onclick="selectedDate='${dStr}'; render();">
-                <div class="stripe-container">
-                    <div class="stripe" style="background:${lC}"></div>
-                    <div class="stripe" style="background:${hC}"></div>
-                    <div class="stripe" style="background:${fC}"></div>
-                </div>
-                <div class="date-content">
-                    <span style="font-size:8px; font-weight:bold;">${days[d.getDay()]}</span>
-                    <span style="font-size:20px; font-weight:900;">${d.getDate()}</span>
-                </div>
-            </div>`;
-        }
-        cal.innerHTML = html;
-
-        // Lists
-        document.getElementById('habit-list').innerHTML = day.habits.map((h, i) => `
-            <div class="item-card" onclick="getDay('${selectedDate}').habits[${i}].d = !getDay('${selectedDate}').habits[${i}].d; save();">
-                <div class="check-box ${h.d ? 'done' : ''}"></div><span style="font-size:14px; font-weight:bold;">${h.t}</span>
-            </div>`).join('');
-
-        document.getElementById('eating-list').innerHTML = day.eating.map((e, i) => `
-            <div class="item-card" onclick="getDay('${selectedDate}').eating[${i}].d = !getDay('${selectedDate}').eating[${i}].d; save();">
-                <div class="check-box ${e.d ? 'done' : ''}"></div><span style="font-size:14px; font-weight:bold;">${e.t}</span>
-            </div>`).join('');
-
-        // Lifts
-        const splits = { "Tuesday": "Shoulders + Tris", "Wednesday": "Back + Bis", "Sunday": "Chest + Tris" };
-        document.getElementById('workout-list').innerHTML = Object.keys(splits).map(dN => {
-            const sN = splits[dN];
-            return `<div class="workout-card"><div class="w-header"><span class="w-day">${dN}</span><span class="w-split">${sN}</span></div>
-                ${db.exercises[sN].map(ex => {
-                    const s = day.lifts[sN]?.[ex] || {w:'', r:''};
-                    return `<div class="lift-row"><div class="ref-txt">Prev: ${findLastLift(sN, ex)}</div>
-                        <div class="grid-3"><span style="font-size:12px; font-weight:bold;">${ex}</span>
-                        <input type="number" placeholder="Lbs" value="${s.w}" oninput="updateLift('${sN}','${ex}','w',this.value)">
-                        <input type="number" placeholder="Reps" value="${s.r}" oninput="updateLift('${sN}','${ex}','r',this.value)"></div></div>`;
-                }).join('')}</div>`;
-        }).join('');
-
-        document.getElementById('progress-vault').innerHTML = day.photos.map(p => `<img src="${p}">`).join('');
-        document.getElementById('meal-vault').innerHTML = day.meals.map(p => `<img src="${p}">`).join('');
-        
-        const diff = Math.ceil((new Date('2026-05-21') - new Date()) / 86400000);
-        document.getElementById('countdown').innerText = diff > 0 ? diff : 0;
-    }
-
-    function saveMotto() { db.motto = document.getElementById('motto-in').value || db.motto; save(); }
-    render();
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CORE</title>
-    <style>
-        :root {
-            --bg: #000000;
-            --surface: #0A0A0A;
-            --accent: #D4AF37; 
-            --text-main: #FFFFFF;
-            --text-dim: #666666;
-            --border: #1A1A1A;
-            --card-bg: #0F0F0F;
-            --success: rgba(40, 167, 69, 0.3);
-            --fail: rgba(220, 53, 69, 0.3);
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background: var(--bg); color: var(--text-main); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            margin: 0; padding: 0 0 120px 0; overflow-x: hidden; 
-        }
-
-        header { padding: 40px 20px 20px 20px; position: relative; }
-        .logo { font-size: 3rem; font-weight: 900; letter-spacing: 4px; color: var(--accent); margin: 0; }
-        .motto { font-size: 10px; color: var(--accent); margin-top: 10px; text-transform: uppercase; letter-spacing: 1.5px; width: 75%; font-weight: bold; }
-        
-        .days-left { position: absolute; top: 45px; right: 20px; text-align: right; }
-        .days-val { font-size: 2.2rem; font-weight: 900; display: block; line-height: 1; }
-        .days-lbl { font-size: 8px; text-transform: uppercase; color: var(--text-dim); }
-
-        /* AI CONSOLE */
-        .ai-console { background: var(--surface); border: 1px solid var(--accent); margin: 0 20px 20px 20px; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); }
-        .ai-header { font-size: 10px; color: var(--accent); font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; }
-        .ai-text { font-size: 13px; line-height: 1.6; color: #EEE; font-style: italic; min-height: 40px; }
-
-        /* CALENDAR WITH STRIPES */
-        .calendar-wrap { display: flex; gap: 10px; overflow-x: auto; padding: 20px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); scrollbar-width: none; }
-        .calendar-wrap::-webkit-scrollbar { display: none; }
-        .date-card { 
-            min-width: 65px; height: 85px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; 
-        }
-        .date-card.selected { border: 2px solid var(--accent); transform: scale(1.05); z-index: 5; }
-        .stripe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; opacity: 0.5; }
-        .stripe { flex: 1; width: 100%; }
-        .date-content { z-index: 2; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
-
-        /* PROGRESS */
-        .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 20px 20px; }
-        .prog-card { background: var(--surface); padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
-        .bar-bg { width: 100%; height: 8px; background: #000; border-radius: 10px; margin-top: 10px; overflow: hidden; border: 1px solid var(--border); }
-        .bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        /* WORKOUTS */
-        .workout-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin: 0 20px 20px 20px; overflow: hidden; }
-        .w-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; }
-        .w-day { color: var(--accent); font-size: 1.4rem; font-weight: 900; text-transform: uppercase; }
-        .w-split { color: var(--text-dim); font-size: 10px; font-weight: bold; margin-top: 4px; text-transform: uppercase; }
-        .lift-row { padding: 15px 20px; border-bottom: 1px solid #111; }
-        .ref-txt { font-size: 9px; color: var(--text-dim); margin-bottom: 5px; font-style: italic; }
-        .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; align-items: center; }
-        input { background: transparent; border: none; border-bottom: 1px solid #222; color: #FFF; padding: 5px 0; outline: none; width: 100%; font-family: inherit; }
-
-        /* ITEM CARDS */
-        .item-card { background: var(--surface); border: 1px solid var(--border); margin: 0 20px 10px 20px; padding: 20px; display: flex; align-items: center; border-radius: 8px; }
-        .check-box { width: 22px; height: 22px; border: 1.5px solid #333; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
-        .check-box.done { background: var(--accent); border-color: var(--accent); box-shadow: inset 0 0 0 3px var(--surface); }
-
-        /* UI */
-        .btn-prime { background: var(--accent); color: #000; border: none; padding: 18px; width: calc(100% - 40px); margin: 10px 20px; font-weight: 900; text-transform: uppercase; border-radius: 4px; }
-        nav { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: space-around; padding: 20px 0 40px 0; border-top: 1px solid var(--border); z-index: 100; backdrop-filter: blur(10px); }
-        .nav-btn { background: none; border: none; color: var(--text-dim); font-size: 10px; font-weight: 900; text-transform: uppercase; }
-        .nav-btn.active { color: var(--accent); }
-        .page { display: none; }
-        .page.active { display: block; }
-        .vault { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 20px; }
-        .vault img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--border); border-radius: 4px; }
-        textarea { width: 100%; height: 120px; background: var(--surface); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 8px; font-family: inherit; outline: none; margin-top: 10px; }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="logo">FORGE</div>
-    <div id="motto-disp" class="motto">SYSTEM STANDBY</div>
-    <div class="days-left"><span class="days-val" id="countdown">0</span><span class="days-lbl">Days Left</span></div>
-</header>
-
-<div class="calendar-wrap" id="calendar"></div>
-
-<div class="progress-grid">
-    <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">INTEGRITY</div><div class="bar-bg"><div id="h-bar" class="bar-fill"></div></div></div>
-    <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">FUEL</div><div class="bar-bg"><div id="e-bar" class="bar-fill"></div></div></div>
-</div>
-
-<div id="page-ai" class="page active">
-    <div class="ai-console">
-        <div class="ai-header">SYSTEM_OPERATOR_v3</div>
-        <div id="ai-text" class="ai-text">History loaded. Awaiting performance analysis.</div>
-    </div>
-    <button class="btn-prime" onclick="runAI()">RUN SYSTEM CHECK</button>
-</div>
-
-<div id="page-lift" class="page">
-    <div id="workout-list"></div>
-</div>
-
-<div id="page-habits" class="page">
-    <div id="habit-list"></div>
-</div>
-
-<div id="page-eating" class="page">
-    <div id="eating-list"></div>
-    <div style="padding: 20px;">
-        <label style="font-size: 9px; color: var(--accent); font-weight: 900;">MEAL NOTES</label>
-        <textarea id="meal-notes" placeholder="Describe your macros..."></textarea>
-        <button class="btn-prime" style="margin: 20px 0; width: 100%;" onclick="analyzeFuel()">ANALYZE FUEL QUALITY</button>
-        <button class="btn-prime" style="margin: 0; background: #1A1A1A; color: white;" onclick="triggerCam('meals')">+ ADD MEAL PHOTO</button>
-    </div>
-    <div id="meal-vault" class="vault"></div>
-</div>
-
-<div id="page-vault" class="page">
-    <button class="btn-prime" onclick="triggerCam('progress')">+ ADD PROGRESS PHOTO</button>
-    <div id="progress-vault" class="vault" style="margin-top: 20px;"></div>
-</div>
-
-<div id="page-settings" class="page">
-    <div style="padding: 20px;">
-        <label style="font-size: 9px; color: var(--accent); font-weight: 900;">MANAGE SYSTEM</label>
-        <input type="text" id="motto-in" placeholder="Edit Motto" style="margin-bottom: 20px;">
-        <button class="btn-prime" onclick="saveMotto()" style="margin: 0 0 40px 0; width: 100%;">SAVE MOTTO</button>
-        <button onclick="localStorage.clear(); location.reload();" style="color:red; background:none; border:none; width:100%; font-weight:bold; font-size:10px;">ERASE ALL DATA</button>
-    </div>
-</div>
-
-<input type="file" id="cam" accept="image/*" capture="camera" style="display:none">
-
-<nav>
-    <button class="nav-btn active" onclick="tab('ai', this)">AI</button>
-    <button class="nav-btn" onclick="tab('lift', this)">Lift</button>
-    <button class="nav-btn" onclick="tab('habits', this)">Habits</button>
-    <button class="nav-btn" onclick="tab('eating', this)">Eating</button>
-    <button class="nav-btn" onclick="tab('vault', this)">Vault</button>
-    <button class="nav-btn" onclick="tab('settings', this)">Set</button>
-</nav>
-
-<script>
-    const API_KEY = "KvTw"; 
-    let selectedDate = new Date().toDateString();
-
-    let db = JSON.parse(localStorage.getItem('forge_elite_final')) || {
-        motto: "MAKE HARD DECISIONS",
-        habits: ["Drink 2L Water", "No Social Media", "50 Push Ups", "No Soda"],
-        eating: ["No Junk Food", "No Seconds", "No Fried Food"],
-        splits: {"Tuesday": "Shoulders + Tris", "Wednesday": "Back + Bis", "Sunday": "Chest + Tris"},
-        exercises: {"Shoulders + Tris": ["Overhead Press"], "Back + Bis": ["Lat Pulldowns", "Curls"], "Chest + Tris": ["Bench Press"]},
-        dailyData: {}
-    };
-
-    function getDay(d) {
-        if(!db.dailyData[d]) db.dailyData[d] = { habits: db.habits.map(t=>({t, d:false})), eating: db.eating.map(t=>({t, d:false})), lifts: {}, fuelPct: 0, mealNotes: "", photos: [], meals: [] };
-        return db.dailyData[d];
-    }
-
-    function save() { localStorage.setItem('forge_elite_final', JSON.stringify(db)); render(); }
-
-    async function callAI(prompt) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-        const res = await fetch(url, { method: 'POST', body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
-        const data = await res.json();
-        return data.candidates[0].content.parts[0].text;
-    }
-
-    async function runAI() {
-        const day = getDay(selectedDate);
-        const prompt = `Act as an aggressive drill sergeant. Goal: "${db.motto}". Progress: ${day.habits.filter(h=>h.d).length}/${day.habits.length} habits. Give 1 brutal critique and 1 new motto. Format: Critique | Motto`;
-        const result = await callAI(prompt);
-        const [c, m] = result.split('|');
-        document.getElementById('ai-text').innerText = c.trim();
-        db.motto = m.trim(); save();
-    }
-
-    async function analyzeFuel() {
-        const notes = document.getElementById('meal-notes').value;
-        const prompt = `Rate this diet out of 100 for fitness: "${notes}". Respond ONLY with the number.`;
-        const score = await callAI(prompt);
-        const day = getDay(selectedDate);
-        day.fuelPct = parseInt(score.trim()) || 0;
-        day.mealNotes = notes; save();
-    }
-
-    function tab(id, btn) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('page-'+id).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function updateLift(split, ex, field, val) {
-        const day = getDay(selectedDate);
-        if(!day.lifts[split]) day.lifts[split] = {};
-        if(!day.lifts[split][ex]) day.lifts[split][ex] = {w:'', r:''};
-        day.lifts[split][ex][field] = val;
-        save();
-    }
-
-    function triggerCam(target) { window.camTarget = target; document.getElementById('cam').click(); }
-    document.getElementById('cam').onchange = function(e) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const day = getDay(selectedDate);
-            if(window.camTarget === 'progress') day.photos.unshift(reader.result);
-            else day.meals.unshift(reader.result);
-            save();
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
-
-    function findLastLift(split, ex) {
-        const dates = Object.keys(db.dailyData).sort((a,b) => new Date(b) - new Date(a));
-        for(let d of dates) {
-            if(d === selectedDate) continue;
-            const s = db.dailyData[d].lifts[split];
-            if(s && s[ex] && s[ex].w) return `${s[ex].w}lbs x ${s[ex].r}`;
-        }
-        return "Baseline";
-    }
-
-    function render() {
-        const day = getDay(selectedDate);
-        document.getElementById('motto-disp').innerText = db.motto;
-        document.getElementById('meal-notes').value = day.mealNotes;
-        
-        // Progress Bars
-        const hPct = (day.habits.filter(h=>h.d).length / day.habits.length) * 100;
-        document.getElementById('h-bar').style.width = hPct + '%';
-        document.getElementById('e-bar').style.width = day.fuelPct + '%';
-
-        // Calendar
-        const cal = document.getElementById('calendar');
-        const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-        let html = '';
-        const now = new Date();
-        for(let i = -7; i < 7; i++) {
-            const d = new Date(); d.setDate(now.getDate() + i);
-            const dStr = d.toDateString();
-            const dD = getDay(dStr);
-            
-            const hasL = Object.values(dD.lifts).some(s => Object.values(s).some(l => l.w));
-            const hC = (dD.habits.filter(h=>h.d).length / dD.habits.length) >= 0.7 ? 'var(--success)' : 'var(--fail)';
-            const fC = dD.fuelPct >= 70 ? 'var(--success)' : 'var(--fail)';
-            const lC = hasL ? 'var(--success)' : 'var(--fail)';
-
-            html += `
-            <div class="date-card ${dStr === selectedDate ? 'selected' : ''}" onclick="selectedDate='${dStr}'; render();">
-                <div class="stripe-container">
-                    <div class="stripe" style="background:${lC}"></div>
-                    <div class="stripe" style="background:${hC}"></div>
-                    <div class="stripe" style="background:${fC}"></div>
-                </div>
-                <div class="date-content">
-                    <span style="font-size:8px; font-weight:bold;">${days[d.getDay()]}</span>
-                    <span style="font-size:20px; font-weight:900;">${d.getDate()}</span>
-                </div>
-            </div>`;
-        }
-        cal.innerHTML = html;
-
-        // Lists
-        document.getElementById('habit-list').innerHTML = day.habits.map((h, i) => `
-            <div class="item-card" onclick="getDay('${selectedDate}').habits[${i}].d = !getDay('${selectedDate}').habits[${i}].d; save();">
-                <div class="check-box ${h.d ? 'done' : ''}"></div><span style="font-size:14px; font-weight:bold;">${h.t}</span>
-            </div>`).join('');
-
-        document.getElementById('eating-list').innerHTML = day.eating.map((e, i) => `
-            <div class="item-card" onclick="getDay('${selectedDate}').eating[${i}].d = !getDay('${selectedDate}').eating[${i}].d; save();">
-                <div class="check-box ${e.d ? 'done' : ''}"></div><span style="font-size:14px; font-weight:bold;">${e.t}</span>
-            </div>`).join('');
-
-        // Lifts
-        const splits = { "Tuesday": "Shoulders + Tris", "Wednesday": "Back + Bis", "Sunday": "Chest + Tris" };
-        document.getElementById('workout-list').innerHTML = Object.keys(splits).map(dN => {
-            const sN = splits[dN];
-            return `<div class="workout-card"><div class="w-header"><span class="w-day">${dN}</span><span class="w-split">${sN}</span></div>
-                ${db.exercises[sN].map(ex => {
-                    const s = day.lifts[sN]?.[ex] || {w:'', r:''};
-                    return `<div class="lift-row"><div class="ref-txt">Prev: ${findLastLift(sN, ex)}</div>
-                        <div class="grid-3"><span style="font-size:12px; font-weight:bold;">${ex}</span>
-                        <input type="number" placeholder="Lbs" value="${s.w}" oninput="updateLift('${sN}','${ex}','w',this.value)">
-                        <input type="number" placeholder="Reps" value="${s.r}" oninput="updateLift('${sN}','${ex}','r',this.value)"></div></div>`;
-                }).join('')}</div>`;
-        }).join('');
-
-        document.getElementById('progress-vault').innerHTML = day.photos.map(p => `<img src="${p}">`).join('');
-        document.getElementById('meal-vault').innerHTML = day.meals.map(p => `<img src="${p}">`).join('');
-        
-        const diff = Math.ceil((new Date('2026-05-21') - new Date()) / 86400000);
-        document.getElementById('countdown').innerText = diff > 0 ? diff : 0;
-    }
-
-    function saveMotto() { db.motto = document.getElementById('motto-in').value || db.motto; save(); }
-    render();
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CORE</title>
-    <style>
-        :root {
-            --bg: #F8FAFC; /* Crisp Cloud White */
+            --bg: #F8FAFC; 
             --surface: #FFFFFF;
-            --accent: #2563EB; /* Electric Cobalt */
-            --text-main: #0F172A; /* Deep Navy */
+            --accent: #2563EB; 
+            --text-main: #0F172A; 
             --text-dim: #64748B;
             --border: #E2E8F0;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --success: rgba(34, 197, 94, 0.6); /* Vibrant Mint */
-            --fail: rgba(239, 68, 68, 0.4); /* Soft Coral */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --success: rgba(34, 197, 94, 0.6); 
+            --fail: rgba(239, 68, 68, 0.4); 
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             background: var(--bg); color: var(--text-main); 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            font-family: -apple-system, sans-serif; 
             margin: 0; padding: 0 0 120px 0; overflow-x: hidden; 
         }
 
-        header { padding: 50px 25px 25px 25px; background: var(--surface); border-bottom: 1px solid var(--border); }
-        .logo { font-size: 2.8rem; font-weight: 900; letter-spacing: -1.5px; color: var(--accent); margin: 0; }
-        .motto { font-size: 11px; color: var(--text-dim); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-        .days-left { position: absolute; top: 55px; right: 25px; text-align: right; }
-        .days-val { font-size: 2.2rem; font-weight: 900; color: var(--text-main); display: block; line-height: 1; }
+        header { padding: 50px 25px 20px 25px; background: var(--surface); border-bottom: 1px solid var(--border); position: relative; }
+        .logo { font-size: 2.5rem; font-weight: 900; letter-spacing: -1.5px; color: var(--accent); margin: 0; }
+        .motto { font-size: 10px; color: var(--text-dim); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .days-left { position: absolute; top: 50px; right: 25px; text-align: right; }
+        .days-val { font-size: 2rem; font-weight: 900; color: var(--text-main); display: block; line-height: 1; }
+        .days-lbl { font-size: 8px; text-transform: uppercase; color: var(--text-dim); font-weight: bold; }
 
-        /* CALENDAR - BRIGHT & CRISP */
-        .calendar-wrap { display: flex; gap: 12px; overflow-x: auto; padding: 25px; background: var(--bg); scrollbar-width: none; }
+        .calendar-wrap { display: flex; gap: 12px; overflow-x: auto; padding: 20px 25px; background: var(--bg); scrollbar-width: none; }
         .calendar-wrap::-webkit-scrollbar { display: none; }
         .date-card { 
-            min-width: 65px; height: 90px; background: var(--surface); border: 1px solid var(--border);
+            min-width: 65px; height: 85px; background: var(--surface); border: 1px solid var(--border);
             border-radius: 12px; position: relative; overflow: hidden; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--card-shadow);
         }
-        .date-card.selected { border: 2.5px solid var(--accent); transform: translateY(-3px); }
-        .stripe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; opacity: 0.8; }
+        .date-card.selected { border: 2px solid var(--accent); transform: scale(1.02); }
+        .stripe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; opacity: 0.7; }
         .stripe { flex: 1; width: 100%; }
         .date-content { z-index: 2; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
 
-        /* PROGRESS */
-        .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 25px 25px 25px; }
-        .prog-card { background: var(--surface); padding: 18px; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); }
-        .bar-bg { width: 100%; height: 8px; background: #F1F5F9; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 25px; }
+        .prog-card { background: var(--surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--card-shadow); }
+        .bar-bg { width: 100%; height: 6px; background: #F1F5F9; border-radius: 10px; margin-top: 8px; overflow: hidden; }
         .bar-fill { height: 100%; background: var(--accent); width: 0%; border-radius: 10px; transition: width 0.8s ease; }
 
-        /* AI CONSOLE - GHOST WHITE */
-        .ai-console { background: #EEF2FF; border: 1px solid #C7D2FE; margin: 0 25px 25px 25px; padding: 20px; border-radius: 12px; }
+        .ai-console { background: #EEF2FF; border: 1px solid #C7D2FE; margin: 20px 25px; padding: 20px; border-radius: 12px; }
         .ai-header { font-size: 10px; color: var(--accent); font-weight: 900; letter-spacing: 1.5px; margin-bottom: 10px; }
         .ai-text { font-size: 14px; line-height: 1.6; color: #3730A3; font-style: italic; }
 
-        /* WORKOUTS - THE FLOATING CARDS */
-        .workout-card { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; margin: 0 25px 20px 25px; overflow: hidden; box-shadow: var(--card-shadow); border-left: 5px solid var(--accent); }
-        .w-header { padding: 20px; background: #F8FAFC; border-bottom: 1px solid var(--border); }
-        .w-day { color: var(--text-main); font-size: 1.3rem; font-weight: 800; text-transform: uppercase; }
-        .lift-row { padding: 18px 20px; border-bottom: 1px solid #F1F5F9; }
-        .ref-txt { font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
+        .workout-card { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; margin: 0 25px 20px 25px; overflow: hidden; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent); }
+        .w-header { padding: 15px 20px; background: #F8FAFC; border-bottom: 1px solid var(--border); }
+        .lift-row { padding: 15px 20px; border-bottom: 1px solid #F1F5F9; }
         .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: center; }
-        input { background: #F1F5F9; border: none; color: var(--text-main); padding: 10px; border-radius: 6px; font-size: 14px; width: 100%; outline: none; }
+        input { background: #F1F5F9; border: none; color: var(--text-main); padding: 10px; border-radius: 8px; font-size: 14px; width: 100%; outline: none; }
 
-        /* ITEM CARDS */
-        .item-card { background: var(--surface); border: 1px solid var(--border); margin: 0 25px 12px 25px; padding: 20px; display: flex; align-items: center; border-radius: 12px; box-shadow: var(--card-shadow); }
-        .check-box { width: 24px; height: 24px; border: 2px solid var(--border); border-radius: 8px; margin-right: 15px; flex-shrink: 0; transition: 0.2s; }
-        .check-box.done { background: var(--accent); border-color: var(--accent); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 16px; background-position: center; background-repeat: no-repeat; }
+        .item-card { background: var(--surface); border: 1px solid var(--border); margin: 0 25px 12px 25px; padding: 18px; display: flex; align-items: center; border-radius: 12px; box-shadow: var(--card-shadow); }
+        .check-box { width: 24px; height: 24px; border: 2px solid var(--border); border-radius: 8px; margin-right: 15px; flex-shrink: 0; }
+        .check-box.done { background: var(--accent); border-color: var(--accent); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-size: 14px; background-position: center; background-repeat: no-repeat; }
 
-        /* UI BUTTONS */
-        .btn-prime { background: var(--accent); color: white; border: none; padding: 20px; width: calc(100% - 50px); margin: 10px 25px; font-weight: 800; text-transform: uppercase; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2); }
+        .btn-prime { background: var(--accent); color: white; border: none; padding: 18px; width: calc(100% - 50px); margin: 10px 25px; font-weight: 800; text-transform: uppercase; border-radius: 12px; }
         
         nav { 
-            position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.9); 
+            position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); 
             display: flex; justify-content: space-around; padding: 15px 0 35px 0; 
-            border-top: 1px solid var(--border); z-index: 100; backdrop-filter: blur(20px); 
+            border-top: 1px solid var(--border); z-index: 100; backdrop-filter: blur(10px); 
         }
-        .nav-btn { background: none; border: none; color: var(--text-dim); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-btn { background: none; border: none; color: var(--text-dim); font-size: 9px; font-weight: 800; text-transform: uppercase; }
         .nav-btn.active { color: var(--accent); }
 
-        .vault img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
-        textarea { width: 100%; height: 130px; background: #F1F5F9; border: 1px solid var(--border); color: var(--text-main); padding: 15px; border-radius: 12px; font-family: inherit; margin-top: 10px; outline: none; }
+        .vault { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 25px; }
+        .vault img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+        textarea { width: 100%; height: 120px; background: #F1F5F9; border: 1px solid var(--border); color: var(--text-main); padding: 15px; border-radius: 12px; font-family: inherit; margin-top: 10px; outline: none; }
+        
         .page { display: none; }
         .page.active { display: block; }
     </style>
@@ -709,49 +84,70 @@
 
 <header>
     <div class="logo">CORE</div>
-    <div id="motto-disp" class="motto">PREPARING FOR SYSTEM CHECK</div>
-    <div class="days-left"><span class="days-val" id="countdown">0</span></div>
+    <div id="motto-disp" class="motto">PREPARING SYSTEM...</div>
+    <div class="days-left"><span class="days-val" id="countdown">0</span><span class="days-lbl">Days Left</span></div>
 </header>
 
 <div class="calendar-wrap" id="calendar"></div>
 
-<div class="progress-grid">
-    <div class="prog-card"><div style="font-size:9px; font-weight:900; color:var(--text-dim); letter-spacing:1px;">INTEGRITY</div><div class="bar-bg"><div id="h-bar" class="bar-fill"></div></div></div>
-    <div class="prog-card"><div style="font-size:9px; font-weight:900; color:var(--text-dim); letter-spacing:1px;">FUEL</div><div class="bar-bg"><div id="e-bar" class="bar-fill"></div></div></div>
-</div>
-
-<div id="page-ai" class="page active">
-    <div class="ai-console">
-        <div class="ai-header">CORE_OPERATOR_v4</div>
-        <div id="ai-text" class="ai-text">Daily metrics synced. Awaiting your move.</div>
+<div id="page-habits" class="page active">
+    <div class="progress-grid">
+        <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">INTEGRITY</div><div class="bar-bg"><div id="h-bar" class="bar-fill"></div></div></div>
+        <div class="prog-card"><div style="font-size:8px; font-weight:900; color:var(--text-dim);">FUEL</div><div class="bar-bg"><div id="e-bar" class="bar-fill"></div></div></div>
     </div>
-    <button class="btn-prime" onclick="runAI()">ANALYZE PERFORMANCE</button>
+    <div id="habit-list"></div>
 </div>
 
 <div id="page-lift" class="page"><div id="workout-list"></div></div>
-<div id="page-habits" class="page"><div id="habit-list"></div></div>
+
 <div id="page-eating" class="page">
     <div id="eating-list"></div>
     <div style="padding: 25px;">
-        <textarea id="meal-notes" placeholder="What did we fuel with today?"></textarea>
-        <button class="btn-prime" style="margin: 20px 0; width: 100%;" onclick="analyzeFuel()">CALCULATE FUEL GRADE</button>
+        <textarea id="meal-notes" placeholder="Log macros..."></textarea>
+        <button class="btn-prime" style="margin: 20px 0; width: 100%;" onclick="analyzeFuel()">ANALYZE FUEL</button>
+        <button class="btn-prime" style="margin: 0; background: #E2E8F0; color: #475569;" onclick="triggerCam('meals')">+ ADD MEAL PHOTO</button>
     </div>
-    <div id="meal-vault" class="vault" style="display:grid; grid-template-columns: repeat(3,1fr); gap:4px; padding:0 25px;"></div>
+    <div id="meal-vault" class="vault"></div>
 </div>
 
+<div id="page-ai" class="page">
+    <div class="ai-console">
+        <div class="ai-header">CORE_OPERATOR_v4</div>
+        <div id="ai-text" class="ai-text">System Synced. Awaiting Performance Scan.</div>
+    </div>
+    <button class="btn-prime" onclick="runAI()">RUN PERFORMANCE SCAN</button>
+</div>
+
+<div id="page-vault" class="page">
+    <button class="btn-prime" onclick="triggerCam('progress')">+ ADD PROGRESS PHOTO</button>
+    <div id="progress-vault" class="vault" style="margin-top:20px;"></div>
+</div>
+
+<div id="page-settings" class="page">
+    <div style="padding:25px;">
+        <input type="text" id="motto-in" placeholder="New Motto..." style="margin-bottom:20px;">
+        <button class="btn-prime" style="margin:0; width:100%;" onclick="db.motto=document.getElementById('motto-in').value; save();">SAVE MOTTO</button>
+        <button onclick="localStorage.clear(); location.reload();" style="margin-top:40px; color:red; border:none; background:none; width:100%; font-weight:bold; font-size:10px;">RESET ALL SYSTEM DATA</button>
+    </div>
+</div>
+
+<input type="file" id="cam" accept="image/*" capture="camera" style="display:none">
+
 <nav>
-    <button class="nav-btn active" onclick="tab('ai', this)">AI</button>
+    <button class="nav-btn active" onclick="tab('habits', this)">Habits</button>
     <button class="nav-btn" onclick="tab('lift', this)">Lift</button>
-    <button class="nav-btn" onclick="tab('habits', this)">Habits</button>
     <button class="nav-btn" onclick="tab('eating', this)">Eating</button>
+    <button class="nav-btn" onclick="tab('ai', this)">AI</button>
+    <button class="nav-btn" onclick="tab('vault', this)">Vault</button>
+    <button class="nav-btn" onclick="tab('settings', this)">Set</button>
 </nav>
 
 <script>
     const API_KEY = "KvTw"; 
     let selectedDate = new Date().toDateString();
 
-    let db = JSON.parse(localStorage.getItem('forge_solar_v1')) || {
-        motto: "MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT",
+    let db = JSON.parse(localStorage.getItem('core_solar_v2')) || {
+        motto: "MAKE HARD DECISIONS",
         habits: ["Drink 2L Water", "No Social Media", "50 Push Ups", "No Soda"],
         eating: ["No Junk Food", "No Seconds", "No Fried Food"],
         splits: {"Tuesday": "Shoulders + Tris", "Wednesday": "Back + Bis", "Sunday": "Chest + Tris"},
@@ -764,7 +160,7 @@
         return db.dailyData[d];
     }
 
-    function save() { localStorage.setItem('forge_solar_v1', JSON.stringify(db)); render(); }
+    function save() { localStorage.setItem('core_solar_v2', JSON.stringify(db)); render(); }
 
     async function callAI(prompt) {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -774,21 +170,16 @@
     }
 
     async function runAI() {
-        const day = getDay(selectedDate);
-        const prompt = `Act as an encouraging but firm performance coach. Goal: "${db.motto}". Progress: ${day.habits.filter(h=>h.d).length}/${day.habits.length} habits. Give 1 sharp sentence critique and 1 new positive high-performance motto. Format: Critique | Motto`;
-        const result = await callAI(prompt);
-        const [c, m] = result.split('|');
+        const d = getDay(selectedDate);
+        const res = await callAI(`Act as firm coach. Motto: "${db.motto}". Progress: ${d.habits.filter(h=>h.d).length}/${d.habits.length}. Critique | Motto`);
+        const [c, m] = res.split('|');
         document.getElementById('ai-text').innerText = c.trim();
         db.motto = m.trim(); save();
     }
 
     async function analyzeFuel() {
-        const notes = document.getElementById('meal-notes').value;
-        const prompt = `Rate this diet out of 100: "${notes}". Respond ONLY with the number.`;
-        const score = await callAI(prompt);
-        const day = getDay(selectedDate);
-        day.fuelPct = parseInt(score.trim()) || 0;
-        day.mealNotes = notes; save();
+        const score = await callAI(`Rate diet 0-100: "${document.getElementById('meal-notes').value}". Number only.`);
+        const d = getDay(selectedDate); d.fuelPct = parseInt(score.trim()) || 0; save();
     }
 
     function tab(t, b) {
@@ -805,60 +196,73 @@
         d.lifts[s][e][f] = v; save();
     }
 
+    function triggerCam(target) { window.camT = target; document.getElementById('cam').click(); }
+    document.getElementById('cam').onchange = (e) => {
+        const r = new FileReader();
+        r.onload = () => {
+            const d = getDay(selectedDate);
+            if(window.camT === 'progress') d.photos.unshift(r.result);
+            else d.meals.unshift(r.result);
+            save();
+        };
+        r.readAsDataURL(e.target.files[0]);
+    };
+
     function findLast(s, e) {
         const dates = Object.keys(db.dailyData).sort((a,b) => new Date(b) - new Date(a));
         for(let d of dates) {
             if(d === selectedDate) continue;
-            const lift = db.dailyData[d].lifts[s];
-            if(lift && lift[e] && lift[e].w) return `${lift[e].w}lbs x ${lift[e].r}`;
+            const l = db.dailyData[d].lifts[s];
+            if(l && l[e] && l[e].w) return `${l[e].w}lbs x ${l[e].r}`;
         }
-        return "New Target";
+        return "New";
     }
 
     function render() {
-        const day = getDay(selectedDate);
+        const dD = getDay(selectedDate);
         document.getElementById('motto-disp').innerText = db.motto;
-        document.getElementById('meal-notes').value = day.mealNotes;
-        document.getElementById('h-bar').style.width = (day.habits.filter(h=>h.d).length / day.habits.length) * 100 + '%';
-        document.getElementById('e-bar').style.width = day.fuelPct + '%';
+        document.getElementById('h-bar').style.width = (dD.habits.filter(h=>h.d).length / dD.habits.length) * 100 + '%';
+        document.getElementById('e-bar').style.width = dD.fuelPct + '%';
 
         const cal = document.getElementById('calendar');
-        let html = '';
-        const now = new Date();
+        let h = ''; const now = new Date();
         for(let i = -7; i < 7; i++) {
             const d = new Date(); d.setDate(now.getDate() + i);
-            const dStr = d.toDateString();
-            const dD = getDay(dStr);
-            const hC = (dD.habits.filter(h=>h.d).length / dD.habits.length) >= 0.7 ? 'var(--success)' : 'var(--fail)';
-            const fC = dD.fuelPct >= 70 ? 'var(--success)' : 'var(--fail)';
-            const hasL = Object.values(dD.lifts).some(s => Object.values(s).some(l => l.w));
-            const lC = hasL ? 'var(--success)' : 'var(--fail)';
-
-            html += `<div class="date-card ${dStr === selectedDate ? 'selected' : ''}" onclick="selectedDate='${dStr}'; render();">
+            const ds = d.toDateString(); const dd = getDay(ds);
+            const hC = (dd.habits.filter(h=>h.d).length/dd.habits.length) >= 0.7 ? 'var(--success)' : 'var(--fail)';
+            const fC = dd.fuelPct >= 70 ? 'var(--success)' : 'var(--fail)';
+            const lC = Object.values(dd.lifts).some(s=>Object.values(s).some(l=>l.w)) ? 'var(--success)' : 'var(--fail)';
+            h += `<div class="date-card ${ds===selectedDate?'selected':''}" onclick="selectedDate='${ds}'; render();">
                 <div class="stripe-container"><div class="stripe" style="background:${lC}"></div><div class="stripe" style="background:${hC}"></div><div class="stripe" style="background:${fC}"></div></div>
-                <div class="date-content"><span style="font-size:9px; font-weight:800; color:var(--text-dim);">${d.toLocaleDateString('en-US', {weekday:'short'}).toUpperCase()}</span><span style="font-size:22px; font-weight:900;">${d.getDate()}</span></div>
+                <div class="date-content"><span style="font-size:8px;font-weight:800;color:var(--text-dim);">${d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase()}</span><span style="font-size:22px;font-weight:900;">${d.getDate()}</span></div>
             </div>`;
         }
-        cal.innerHTML = html;
+        cal.innerHTML = h;
 
-        document.getElementById('habit-list').innerHTML = day.habits.map((h, i) => `
+        document.getElementById('habit-list').innerHTML = dD.habits.map((h, i) => `
             <div class="item-card" onclick="getDay('${selectedDate}').habits[${i}].d = !getDay('${selectedDate}').habits[${i}].d; save();">
-                <div class="check-box ${h.d ? 'done' : ''}"></div><span style="font-size:15px; font-weight:700; color:var(--text-main);">${h.t}</span>
+                <div class="check-box ${h.d ? 'done' : ''}"></div><span style="font-size:15px; font-weight:700;">${h.t}</span>
             </div>`).join('');
 
-        const splits = db.splits;
-        document.getElementById('workout-list').innerHTML = Object.keys(splits).map(dN => {
-            const sN = splits[dN];
-            return `<div class="workout-card"><div class="w-header"><span class="w-day">${dN}</span><br><span style="font-size:10px; color:var(--accent); font-weight:900;">${sN.toUpperCase()}</span></div>
+        document.getElementById('eating-list').innerHTML = dD.eating.map((e, i) => `
+            <div class="item-card" onclick="getDay('${selectedDate}').eating[${i}].d = !getDay('${selectedDate}').eating[${i}].d; save();">
+                <div class="check-box ${e.d ? 'done' : ''}"></div><span style="font-size:15px; font-weight:700;">${e.t}</span>
+            </div>`).join('');
+
+        document.getElementById('workout-list').innerHTML = Object.keys(db.splits).map(dN => {
+            const sN = db.splits[dN];
+            return `<div class="workout-card"><div class="w-header"><span style="font-size:1.3rem;font-weight:800;">${dN}</span><br><span style="font-size:10px;color:var(--accent);font-weight:900;">${sN}</span></div>
                 ${db.exercises[sN].map(ex => {
-                    const s = day.lifts[sN]?.[ex] || {w:'', r:''};
-                    return `<div class="lift-row"><div class="ref-txt">PREVIOUS: ${findLast(sN, ex)}</div>
-                        <div class="grid-3"><span style="font-size:13px; font-weight:800;">${ex}</span>
+                    const s = dD.lifts[sN]?.[ex] || {w:'', r:''};
+                    return `<div class="lift-row"><div style="font-size:10px;color:var(--text-dim);margin-bottom:6px;">PREV: ${findLast(sN, ex)}</div>
+                        <div class="grid-3"><span style="font-size:13px;font-weight:800;">${ex}</span>
                         <input type="number" placeholder="LBS" value="${s.w}" oninput="updateLift('${sN}','${ex}','w',this.value)">
                         <input type="number" placeholder="REPS" value="${s.r}" oninput="updateLift('${sN}','${ex}','r',this.value)"></div></div>`;
                 }).join('')}</div>`;
         }).join('');
 
+        document.getElementById('progress-vault').innerHTML = dD.photos.map(p => `<img src="${p}">`).join('');
+        document.getElementById('meal-vault').innerHTML = dD.meals.map(p => `<img src="${p}">`).join('');
         const diff = Math.ceil((new Date('2026-05-21') - new Date()) / 86400000);
         document.getElementById('countdown').innerText = diff > 0 ? diff : 0;
     }
