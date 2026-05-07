@@ -297,38 +297,54 @@ function getLiftHistory(dayId,exIdx){let history=[];const dates=Object.keys(stat
 function getTimeSince(dayId){const ts=state.liftTimestamps&&state.liftTimestamps[dayId];if(!ts)return 'NEVER HIT';const diff=new Date()-new Date(ts);const days=Math.floor(diff/86400000);const hrs=Math.floor((diff%86400000)/3600000);if(days===0&&hrs===0)return 'TODAY';if(days===0)return `${hrs}H AGO`;return `${days}D ${hrs}H AGO`;}
 
 function updateTopFrame(){
-  document.getElementById('countdownNum').textContent=getCountdown();
-  document.getElementById('mottoDisplay').textContent=state.motto;
-  document.getElementById('progFill').style.width=getProgress()+'%';
-  document.getElementById('habitBar').style.width=getHabitPct(selectedDate)+'%';
-  document.getElementById('eatingBar').style.width=getEatingPct(selectedDate)+'%';
-  document.getElementById('liftBar').style.width=getLiftDone(selectedDate)?'100%':'0%';
-  
-  // UPDATE MONTH YEAR DISPLAY
-  const dObj = new Date(selectedDate + "T12:00:00");
-  const monthName = dObj.toLocaleString('en-US', { month: 'long' }).toUpperCase();
-  const yearNum = dObj.getFullYear();
-  document.getElementById('monthYearDisplay').textContent = `${monthName} ${yearNum}`;
+    document.getElementById('countdownNum').textContent=getCountdown();
+    document.getElementById('mottoDisplay').textContent=state.motto;
+    document.getElementById('progFill').style.width=getProgress()+'%';
+    document.getElementById('habitBar').style.width=getHabitPct(selectedDate)+'%';
+    document.getElementById('eatingBar').style.width=getEatingPct(selectedDate)+'%';
+    document.getElementById('liftBar').style.width=getLiftDone(selectedDate)?'100%':'0%';
+    
+    const displayDate = new Date(selectedDate + "T12:00:00");
+    const monthHeader = displayDate.toLocaleString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
+    document.getElementById('monthYearDisplay').textContent = monthHeader;
 
-  const days=getDays(START_DATE,new Date(state.goalDate));
-  const todayStr=fmtDate(TODAY);
-  const wrap=document.getElementById('dateStrip');
-  wrap.innerHTML=days.map(d=>{
-    const ds=fmtDate(d);
-    const dow=['SUN','MON','TUE','WED','THU','FRI','SAT'][d.getDay()];
-    const isA=ds===selectedDate,isTod=ds===todayStr,isPast=ds<=todayStr;
-    let s1='transparent',s2='transparent',s3='transparent';
-    if(isPast){
-      s1=getHabitPct(ds)>=70?'rgba(22,163,74,0.5)':'rgba(220,38,38,0.35)';
-      s2=getEatingPct(ds)>=70?'rgba(22,163,74,0.5)':'rgba(220,38,38,0.35)';
-      s3=getLiftDone(ds)?'rgba(22,163,74,0.5)':'rgba(220,38,38,0.35)';
+    const wrap=document.getElementById('dateStrip');
+    const todayStr=fmtDate(TODAY);
+    let html = '';
+    
+    for(let i = -15; i <= 15; i++) {
+        let d = new Date();
+        d.setDate(TODAY.getDate() + i);
+        const ds = fmtDate(d);
+        const dow = d.toLocaleString('en-US', {weekday: 'short'}).toUpperCase();
+        const isA = ds === selectedDate;
+        const isTod = ds === todayStr;
+        const isPast = d <= TODAY;
+
+        let s1='transparent', s2='transparent', s3='transparent';
+        if(isPast) {
+            s1 = getHabitPct(ds) >= 70 ? 'rgba(22,163,74,0.5)' : 'rgba(220,38,38,0.35)';
+            s2 = getEatingPct(ds) >= 70 ? 'rgba(22,163,74,0.5)' : 'rgba(220,38,38,0.35)';
+            s3 = getLiftDone(ds) ? 'rgba(22,163,74,0.5)' : 'rgba(220,38,38,0.35)';
+        }
+
+        html += `<div class="date-pill${isA?' active':''}" onclick="selectDate('${ds}')">
+            <div class="stripes">
+                <div class="s1" style="background:${s1}"></div>
+                <div class="s2" style="background:${s2}"></div>
+                <div class="s3" style="background:${s3}"></div>
+            </div>
+            <div class="date-pill-inner">
+                <span class="dow">${isTod ? 'NOW' : dow}</span>
+                <span class="dom">${d.getDate()}</span>
+            </div>
+        </div>`;
     }
-    return `<div class="date-pill${isA?' active':''}" onclick="selectDate('${ds}')">
-      <div class="stripes"><div class="s1" style="background:${s1}"></div><div class="s2" style="background:${s2}"></div><div class="s3" style="background:${s3}"></div></div>
-      <div class="date-pill-inner"><span class="dow">${isTod?'NOW':dow}</span><span class="dom">${d.getDate()}</span></div>
-    </div>`;
-  }).join('');
-  setTimeout(()=>{const a=wrap.querySelector('.date-pill.active');if(a)a.scrollIntoView({inline:'center',behavior:'smooth'});},50);
+    wrap.innerHTML = html;
+    setTimeout(() => {
+        const activeCard = wrap.querySelector('.date-pill.active');
+        if(activeCard) activeCard.scrollIntoView({inline:'center', behavior:'smooth'});
+    }, 50);
 }
 
 function showTab(tab){
