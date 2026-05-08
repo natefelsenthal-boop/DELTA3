@@ -18,24 +18,55 @@ html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
 /* ── HEADER ── */
-.top-frame{flex-shrink:0;background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);position:relative;}
-.header-motto{text-align:center;padding:6px 20px 0;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;}
-.countdown-wrap{position:absolute;bottom:12px;right:20px;text-align:right;}
-.countdown-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
-.countdown-label{font-size:8px;color:rgba(255,255,255,0.85);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
+.top-frame{flex-shrink:0;background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);}
 
 /* GLASS BOX */
 .glass-box{
-  margin:0 18px 16px;
+  margin:40px 18px 16px;
   background:rgba(150,185,240,0.35);
   border:1px solid rgba(255,255,255,0.4);
   border-radius:20px;
-  padding:10px 20px;
-  display:flex;align-items:center;justify-content:center;
+  padding:24px 20px 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 8px 32px rgba(31,60,120,0.1),inset 0 1px 0 rgba(255,255,255,0.5);
+  position:relative;
   overflow:hidden;
 }
-.glass-box img{height:90px;width:auto;object-fit:contain;display:block;max-width:90%;}
+.glass-box img{height:80px;width:auto;object-fit:contain;display:block;max-width:90%;}
+.glass-motto{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:rgba(255,255,255,0.85);
+  text-transform:uppercase;
+  font-weight:500;
+  margin-top:10px;
+  text-align:center;
+}
+.glass-countdown{
+  position:absolute;
+  bottom:12px;
+  right:18px;
+  text-align:right;
+}
+.glass-countdown-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:38px;
+  color:#fff;
+  line-height:1;
+  text-shadow:0 2px 12px rgba(37,99,235,0.3);
+}
+.glass-countdown-label{
+  font-size:8px;
+  color:rgba(255,255,255,0.75);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-family:'DM Mono',monospace;
+  margin-top:1px;
+}
 
 /* DATE STRIP */
 .month-year-display{padding:0 22px 4px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
@@ -82,8 +113,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .quote-heart:hover{transform:scale(1.2);}
 .quote-new-btn{margin-top:12px;background:none;border:1px solid rgba(37,99,235,0.2);color:var(--accent);border-radius:8px;padding:6px 14px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;}
 .quote-new-btn:hover{background:rgba(37,99,235,0.06);}
-
-/* SAVED QUOTES */
 .saved-quote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
 .saved-quote-text{font-size:12px;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:500;line-height:1.5;color:var(--text);}
 .saved-quote-author{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;font-weight:700;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
@@ -213,10 +242,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   <div class="glass-box">
     <img src="logo.png" alt="DELTA3" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
     <div style="display:none;font-family:'DM Sans',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-1px;">DELTA3</div>
-    <div class="header-motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
-    <div class="countdown-wrap">
-      <div class="countdown-num" id="countdownNum">—</div>
-      <div class="countdown-label">Days Left</div>
+    <div class="glass-motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
+    <div class="glass-countdown">
+      <div class="glass-countdown-num" id="countdownNum">—</div>
+      <div class="glass-countdown-label">Days Left</div>
     </div>
   </div>
   <div class="month-year-display" id="monthYearDisplay">MAY 2026</div>
@@ -226,7 +255,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     <div class="score-card"><div class="score-label">Eating</div><div class="score-bar"><div class="score-fill" id="eatingBar" style="width:0%"></div></div></div>
     <div class="score-card"><div class="score-label">Lifts</div><div class="score-bar"><div class="score-fill" id="liftBar" style="width:0%"></div></div></div>
   </div>
-  
   <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
   <div class="nav">
     <button class="nav-btn active" onclick="showTab('habits')">Habits</button>
