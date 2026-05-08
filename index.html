@@ -27,7 +27,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 /* DARK GLASS BOX */
 .glass-box{
   margin:0 18px 18px;
-  background:transparent;
+  background:rgba(177,197,237,0.4);
   border:1px solid rgba(255,255,255,0.15);
   border-radius:20px;
   padding:18px 24px;
@@ -57,20 +57,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .month-year-display{padding:0 22px 5px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
 .date-strip-wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 22px 8px;scrollbar-width:none;}
 .date-strip-wrap::-webkit-scrollbar{display:none;}
-.date-pill{min-width:48px;border-radius:10px;border:1.5px solid rgba(37,99,235,0.15);background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);text-align:center;cursor:pointer;flex-shrink:0;overflow:hidden;position:relative;transition:all 0.15s;}
+.date-pill{min-width:56px;border-radius:10px;border:1.5px solid rgba(37,99,235,0.15);background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);text-align:center;cursor:pointer;flex-shrink:0;overflow:hidden;position:relative;transition:all 0.15s;}
 .date-pill.active{border-color:var(--accent);background:rgba(255,255,255,0.92);box-shadow:0 2px 12px rgba(37,99,235,0.2);}
 .date-pill-inner{padding:6px 4px 5px;position:relative;z-index:2;}
-.date-pill .dow{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
-.date-pill .dom{font-size:15px;font-weight:700;color:var(--text);display:block;margin-top:1px;}
+.date-pill .dow{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;display:block;}
+.date-pill .dom{font-size:18px;font-weight:700;color:var(--text);display:block;margin-top:1px;}
 .date-pill.active .dow,.date-pill.active .dom{color:var(--accent);}
 .stripes{position:absolute;inset:0;display:flex;flex-direction:column;z-index:1;}
 .s1,.s2,.s3{flex:1;}
 
 /* SCORE BARS */
 .score-row{display:flex;gap:8px;padding:0 22px 10px;}
-.score-card{flex:1;background:rgba(255,255,255,0.6);border:1px solid rgba(37,99,235,0.12);border-radius:8px;padding:7px 10px;backdrop-filter:blur(8px);}
+.score-card{flex:1;background:rgba(255,255,255,0.6);border:1px solid rgba(37,99,235,0.12);border-radius:8px;padding:10px 12px;backdrop-filter:blur(8px);}
 .score-label{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px;}
-.score-bar{height:5px;background:rgba(37,99,235,0.1);border-radius:3px;overflow:hidden;}
+.score-bar{height:8px;background:rgba(37,99,235,0.1);border-radius:3px;overflow:hidden;}
 .score-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
 .prog-bar{height:2px;background:rgba(37,99,235,0.12);margin:0 22px 8px;}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),#60A5FA);transition:width 0.5s;}
