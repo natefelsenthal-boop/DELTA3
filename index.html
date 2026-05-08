@@ -36,23 +36,24 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   overflow:hidden;
 }
 .glass-box img {
-  height: 160px; /* Doubled the size for a bolder look */
+  height: 150px; /* Bumps size up significantly */
   width: auto;
   object-fit: contain;
   display: block;
   max-width: 95%;
-  margin-bottom: 5px; /* Adds a tiny gap before the motto */
+  margin: 0 auto; /* Centered */
 }
-
-.glass-motto {
+#mottoDisplay, .glass-motto {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.9); /* Slightly brighter for better contrast */
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  font-weight: 600; /* Bumped weight for better legibility */
-  margin-top: 0px; /* Set to 0 because the image margin handles the gap */
+  font-weight: 600;
+  margin-top: -15px; /* THE FIX: Pulls the motto up into the logo's whitespace */
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 .glass-countdown{
   position:absolute;
