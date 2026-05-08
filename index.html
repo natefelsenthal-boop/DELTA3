@@ -53,16 +53,16 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 }
 
 .logo-img {
-  height: 52px;
+  height: 42px; /* Adjusted for better balance */
   width: auto;
   display: block;
-  filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.25));
 }
 
 .logo-wrap {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 }
 
 .motto {
@@ -70,7 +70,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   letter-spacing: 1.5px;
   color: var(--muted);
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 2px;
   font-family: 'DM Mono', monospace;
   max-width: 240px;
   line-height: 1.7;
@@ -162,7 +162,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .add-btn { background: var(--accent); color: #fff; border: none; padding: 7px 14px; border-radius: 8px; font-size: 10px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 700; transition: all 0.15s; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
 .add-btn:hover { background: var(--accent2); }
 
-/* CARDS */
+/* CARDS — deeper shadows */
 .checkin-card { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow); }
 .checkin-lbl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
 .mood-row { display: flex; gap: 6px; margin-bottom: 10px; }
@@ -232,7 +232,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .wlog-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
 .w-input { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); font-family: 'DM Mono', monospace; font-size: 15px; padding: 10px 14px; flex: 1; transition: border-color 0.15s; box-shadow: var(--shadow); }
 .w-input:focus { outline: none; border-color: var(--accent); }
-.w-log-btn { background: var(--accent); border: none; color: #fff; border-radius: var(--radius); padding: 11px 18px; font-weight: 700; font-size: 11px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; flex-shrink: 0; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
+.w-log-btn { background: var(--accent); border: none; color: #fff; border-radius: var(--radius); padding: 11px 18px; font-weight: 700; font-size: 11px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; flex-shrink: 0; box-shadow: 0 2px 8px rgba(37,99,235,0.25); }
 .graph-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow); }
 .wstats { display: flex; gap: 8px; margin-top: 12px; }
 .wstat { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 8px; text-align: center; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06); }
@@ -269,35 +269,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .manage-row:last-child { border-bottom: none; }
 .del-sm { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 3px 10px; cursor: pointer; font-size: 10px; font-weight: 700; }
 .danger-btn { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: var(--radius); padding: 11px; width: 100%; font-size: 12px; cursor: pointer; text-transform: uppercase; font-weight: 600; }
-
-/* QUOTE CARD */
-.quote-card {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.07), rgba(96, 165, 250, 0.05));
-  border: 1px solid rgba(37, 99, 235, 0.15);
-  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px;
-  box-shadow: var(--shadow);
-}
-.quote-text { font-size: 13px; font-style: italic; color: var(--text); line-height: 1.6; margin-bottom: 6px; }
-.quote-author { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
-
-/* PROUD POPUP */
-.proud-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: flex; align-items: center; justify-content: center; z-index: 5000; padding: 20px; backdrop-filter: blur(8px); }
-.proud-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px 28px; width: 100%; max-width: 340px; text-align: center; box-shadow: 0 24px 64px rgba(37, 99, 235, 0.2); }
-.proud-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; }
-.proud-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
-.proud-btns { display: flex; gap: 12px; }
-.proud-yes { flex: 1; background: var(--green); color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; cursor: pointer; }
-.proud-no { flex: 1; background: var(--surface2); color: var(--muted); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; cursor: pointer; }
-
-/* MODAL */
-.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 20px; backdrop-filter: blur(6px); }
-.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 24px 64px rgba(37, 99, 235, 0.18); }
-.modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 16px; color: var(--accent); }
-.modal-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 11px 13px; width: 100%; margin-bottom: 9px; }
-.modal-row { display: flex; gap: 8px; margin-top: 4px; }
-.modal-btn { flex: 1; padding: 11px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
-.modal-btn.confirm { background: var(--accent); border: none; color: #fff; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
-.modal-btn.cancel { background: none; border: 1px solid var(--border); color: var(--muted); }
 
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--accent); color: #fff; padding: 10px 22px; border-radius: 40px; font-size: 11px; font-weight: 700; z-index: 3000; opacity: 0; transition: all 0.3s; pointer-events: none; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -449,7 +420,7 @@ function getLiftDone(ds){const logs=state.liftLogs[ds]||{};return Object.values(
 function getStreak(habitId){let streak=0,d=new Date(TODAY);for(let i=0;i<366;i++){const ds=fmtDate(d);if((state.habitLogs[ds]||{})[habitId]==='done')streak++;else break;d.setDate(d.getDate()-1);}return streak;}
 
 function getLastWeight(dayId,exIdx){
-  const dates=Object.keys(state.liftLogs).sort((a,b)=>b.localeCompare(a));
+  const dates=Object.keys(state.weightLog).sort((a,b)=>b.localeCompare(a));
   for(const ds of dates){
     const dd=state.liftLogs[ds]&&state.liftLogs[ds][dayId];
     if(dd&&dd[exIdx]&&dd[exIdx].w&&dd[exIdx].w!==''){
