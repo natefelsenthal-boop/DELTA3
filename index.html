@@ -224,15 +224,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 </style>
 </head>
 <body>
-
-<div class="top-frame">
-  <div class="header-motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
-  
-  <div class="glass-box">
+<div class="top-frame" style="padding-top: 40px;"> <div class="glass-box">
     <img src="logo.png" alt="DELTA3" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
     <div style="display:none;font-family:'DM Sans',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-1px;">DELTA3</div>
     
-    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:#fff; text-transform:uppercase; margin-top: -12px; opacity:0.9;">
+    <div id="mottoDisplay" style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:#fff; text-transform:uppercase; margin-top: -12px; opacity:0.9;">
       LOG EVERYTHING. OWN YOUR STORY.
     </div>
 
@@ -240,15 +236,26 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
       <div class="countdown-num-big" id="countdownNum">13</div>
       <div class="countdown-label-sm">DAYS LEFT</div>
     </div>
-  </div>
+  </div> </div> ```
 
-  <div class="month-year-display" id="monthYearDisplay">MAY 2026</div>
-  <div class="date-strip-wrap" id="dateStrip"></div>
-  <div class="score-row">
-    <div class="score-card"><div class="score-label">Habits</div><div class="score-bar"><div class="score-fill" id="habitBar" style="width:0%"></div></div></div>
-    <div class="score-card"><div class="score-label">Eating</div><div class="score-bar"><div class="score-fill" id="eatingBar" style="width:0%"></div></div></div>
-    <div class="score-card"><div class="score-label">Lifts</div><div class="score-bar"><div class="score-fill" id="liftBar" style="width:0%"></div></div></div>
-  </div>
+---
+
+### 2. The CSS Check
+To make sure that **40px** gap is perfect and the countdown stays in the bottom right, find these rules in your `<style>` tag and update them:
+
+```css
+.glass-box {
+  margin: 0 18px 40px; /* 40px bottom margin to match the 40px top padding */
+  position: relative;  /* Essential for the countdown placement */
+  /* ... rest of your glass-box styles ... */
+}
+
+.countdown-wrap-new {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  text-align: right;
+}
   <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
   <div class="nav">
     <button class="nav-btn active" onclick="showTab('habits')">Habits</button>
