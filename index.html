@@ -243,6 +243,30 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .empty-state{text-align:center;padding:36px 16px;color:var(--muted);}
 #photoInput{display:none !important;}
+/* ── MOBILE OPTIMIZATION ── */
+@media (max-width: 600px) {
+  .glass-box img {
+    height: 110px !important; /* Scaled perfectly for iPhone */
+    margin-bottom: 0px !important;
+  }
+
+  #mottoDisplay, .glass-motto {
+    font-size: 8.5px !important; 
+    margin-top: -12px !important; /* Pulls motto closer to logo */
+    letter-spacing: 2px !important;
+    max-width: 85%; /* Prevents crashing into the countdown */
+    line-height: 1.4;
+  }
+
+  .glass-box {
+    padding: 30px 15px 20px !important; /* Tightens vertical space */
+    margin: 30px 18px 20px !important; /* Balanced gaps */
+  }
+
+  .glass-countdown-num {
+    font-size: 32px !important; /* Prevents overlap on small screens */
+  }
+}
 </style>
 </head>
 <body>
