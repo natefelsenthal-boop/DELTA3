@@ -8,107 +8,53 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#E8EFFE;
-  --surface:#FFFFFF;
-  --surface2:#F1F5FF;
-  --accent:#2563EB;
-  --accent2:#1D4ED8;
-  --text:#0F172A;
-  --muted:#64748B;
-  --border:#D0DCF5;
-  --green:#16A34A;
-  --red:#DC2626;
-  --shadow:0 4px 16px rgba(37,99,235,0.13);
-  --shadow-lg:0 8px 32px rgba(37,99,235,0.16);
-  --radius:12px;
+  --bg:#E8EFFE;--surface:#FFFFFF;--surface2:#F1F5FF;
+  --accent:#2563EB;--accent2:#1D4ED8;--text:#0F172A;
+  --muted:#64748B;--border:#D0DCF5;--green:#16A34A;
+  --red:#DC2626;--shadow:0 4px 16px rgba(37,99,235,0.13);
+  --shadow-lg:0 8px 32px rgba(37,99,235,0.16);--radius:12px;
 }
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
 /* ── HEADER ── */
-.top-frame{
-  flex-shrink:0;
-  background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);
-  position:relative;
-}
+.top-frame{flex-shrink:0;background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);position:relative;}
+.header-motto{text-align:center;padding:44px 80px 14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(15,23,42,0.55);text-transform:uppercase;font-weight:500;}
+.countdown-wrap{position:absolute;top:44px;right:20px;text-align:right;}
+.countdown-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
+.countdown-label{font-size:8px;color:rgba(255,255,255,0.8);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
 
-/* motto above glass box */
-.header-motto{
-  text-align:center;
-  padding:44px 24px 14px;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:3px;
-  color:rgba(15,23,42,0.55);
-  text-transform:uppercase;
-  font-weight:500;
-}
-
-/* countdown top right */
-.countdown-wrap{
-  position:absolute;
-  top:44px;right:20px;
-  text-align:right;
-}
-.countdown-num{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:36px;
-  color:#fff;
-  line-height:1;
-  text-shadow:0 2px 12px rgba(37,99,235,0.3);
-}
-.countdown-label{
-  font-size:8px;
-  color:rgba(255,255,255,0.75);
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  font-family:'DM Mono',monospace;
-  margin-top:1px;
-}
-
-/* GLASS BOX */
+/* DARK GLASS BOX */
 .glass-box{
   margin:0 18px 18px;
-  background:rgba(255,255,255,0.18);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.45);
+  background:linear-gradient(135deg,#0F1F35 0%,#162840 50%,#0F1F35 100%);
+  border:1px solid rgba(255,255,255,0.15);
   border-radius:20px;
-  padding:22px 24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 8px 32px rgba(31,60,120,0.12),inset 0 1px 0 rgba(255,255,255,0.5);
+  padding:18px 24px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(10,20,40,0.35),inset 0 1px 0 rgba(255,255,255,0.1);
+  overflow:hidden;
 }
+.glass-box img{height:64px;width:auto;object-fit:contain;display:block;}
 
-/* DELTA3 wordmark inside glass */
-.glass-logo-text{
-  font-family:'DM Sans',sans-serif;
-  font-size:52px;
-  font-weight:900;
-  color:#fff;
-  letter-spacing:-1px;
-  line-height:1;
-  text-shadow:0 2px 20px rgba(31,60,120,0.25);
-}
+/* QUOTE CARD */
+.quote-card{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(96,165,250,0.04));border:1px solid rgba(37,99,235,0.13);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;}
+.quote-text{font-family:'DM Sans',sans-serif;font-size:15px;font-style:italic;font-weight:500;color:var(--text);line-height:1.65;margin-bottom:8px;padding-right:36px;}
+.quote-author{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;}
+.quote-heart{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;transition:transform 0.2s;line-height:1;}
+.quote-heart:hover{transform:scale(1.2);}
+.quote-new-btn{margin-top:12px;background:none;border:1px solid rgba(37,99,235,0.2);color:var(--accent);border-radius:8px;padding:6px 14px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;}
+.quote-new-btn:hover{background:rgba(37,99,235,0.06);}
 
-/* triangle+3 icon next to text */
-.glass-logo-icon{
-  margin-left:10px;
-  flex-shrink:0;
-  margin-top:2px;
-}
-
-/* MONTH */
-.month-year-display{
-  padding:0 22px 5px;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:17px;
-  letter-spacing:3px;
-  color:var(--accent);
-}
+/* SAVED QUOTES */
+.saved-quote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
+.saved-quote-text{font-size:12px;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:500;line-height:1.5;color:var(--text);}
+.saved-quote-author{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;font-weight:700;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
+.saved-quote-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;opacity:0;transition:all 0.15s;padding:2px;flex-shrink:0;}
+.saved-quote-item:hover .saved-quote-del{opacity:1;}
 
 /* DATE STRIP */
+.month-year-display{padding:0 22px 5px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
 .date-strip-wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 22px 8px;scrollbar-width:none;}
 .date-strip-wrap::-webkit-scrollbar{display:none;}
 .date-pill{min-width:48px;border-radius:10px;border:1.5px solid rgba(37,99,235,0.15);background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);text-align:center;cursor:pointer;flex-shrink:0;overflow:hidden;position:relative;transition:all 0.15s;}
@@ -126,7 +72,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .score-label{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px;}
 .score-bar{height:5px;background:rgba(37,99,235,0.1);border-radius:3px;overflow:hidden;}
 .score-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
-
 .prog-bar{height:2px;background:rgba(37,99,235,0.12);margin:0 22px 8px;}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),#60A5FA);transition:width 0.5s;}
 
@@ -140,53 +85,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .main{flex:1;overflow-y:auto;padding:16px 20px 80px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
 .main::-webkit-scrollbar{width:3px;}
 .main::-webkit-scrollbar-thumb{background:var(--border);}
-
 .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);}
 .add-btn{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;box-shadow:0 2px 8px rgba(37,99,235,0.25);}
 .add-btn:hover{background:var(--accent2);}
-
-/* QUOTE CARD */
-.quote-card{
-  background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(96,165,250,0.04));
-  border:1px solid rgba(37,99,235,0.13);
-  border-radius:var(--radius);
-  padding:18px 20px;
-  margin-bottom:14px;
-  box-shadow:var(--shadow);
-  position:relative;
-}
-.quote-text{
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
-  font-style:italic;
-  font-weight:500;
-  color:var(--text);
-  line-height:1.65;
-  margin-bottom:8px;
-  padding-right:36px;
-}
-.quote-author{
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  font-weight:700;
-  color:var(--accent);
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-}
-.quote-heart{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;transition:transform 0.2s;line-height:1;}
-.quote-heart:hover{transform:scale(1.2);}
-.quote-new-btn{margin-top:12px;background:none;border:1px solid rgba(37,99,235,0.2);color:var(--accent);border-radius:8px;padding:6px 14px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;}
-.quote-new-btn:hover{background:rgba(37,99,235,0.06);}
-
-/* SAVED QUOTES */
-.saved-quote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
-.saved-quote-text{font-size:12px;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:500;line-height:1.5;color:var(--text);}
-.saved-quote-author{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;font-weight:700;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
-.saved-quote-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;opacity:0;transition:all 0.15s;padding:2px;flex-shrink:0;}
-.saved-quote-item:hover .saved-quote-del{opacity:1;}
-
-/* CHECKIN */
 .checkin-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
 .checkin-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
 .mood-row{display:flex;gap:6px;margin-bottom:10px;}
@@ -194,8 +96,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .mood-btn.sel{border-color:var(--accent);background:rgba(37,99,235,0.08);color:var(--accent);}
 .ci-input{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;width:100%;resize:none;height:46px;line-height:1.5;transition:border-color 0.15s;}
 .ci-input:focus{outline:none;border-color:var(--accent);}
-
-/* HABITS */
 .habit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;box-shadow:var(--shadow);transition:all 0.2s;}
 .habit-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px);}
 .habit-card.flash-anim{animation:hflash 0.45s ease;}
@@ -208,16 +108,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .streak-badge{display:flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);flex-shrink:0;background:rgba(37,99,235,0.08);padding:3px 8px;border-radius:20px;}
 .hdel{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;opacity:0;transition:all 0.15s;font-size:16px;}
 .habit-card:hover .hdel{opacity:1;}
-
 .win-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:12px 15px;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
 .win-text{flex:1;font-size:13px;line-height:1.5;font-weight:500;}
 .win-date{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;flex-shrink:0;margin-top:2px;}
 .wdel{background:none;border:none;color:var(--muted);cursor:pointer;opacity:0;font-size:16px;transition:all 0.15s;}
 .win-card:hover .wdel{opacity:1;}
-
 .ring-wrap{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
-
-/* LIFT */
 .workout-day{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
 .workout-day:hover{box-shadow:var(--shadow-lg);}
 .wd-hdr{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.15s;border-left:4px solid var(--accent);}
@@ -242,8 +138,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .ex-row:hover .exdel{opacity:1;}
 .chevron{color:var(--muted);font-size:12px;transition:transform 0.2s;margin-left:4px;}
 .chevron.open{transform:rotate(180deg);}
-
-/* EATING */
 .r-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .r-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 13px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all 0.15s;position:relative;box-shadow:var(--shadow);}
 .r-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px);}
@@ -254,8 +148,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .r-card:hover .rdel{opacity:1;}
 .notes-area{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:13px 15px;width:100%;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;resize:vertical;min-height:80px;transition:border-color 0.15s;line-height:1.6;box-shadow:var(--shadow);}
 .notes-area:focus{outline:none;border-color:var(--accent);}
-
-/* WEIGHT */
 .wlog-row{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
 .w-input{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Mono',monospace;font-size:15px;padding:10px 14px;flex:1;transition:border-color 0.15s;box-shadow:var(--shadow);}
 .w-input:focus{outline:none;border-color:var(--accent);}
@@ -266,8 +158,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .wstat-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);}
 .wstat-lbl{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;}
 .w-hist-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
-
-/* PHOTOS */
 .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
 .photo-slot{aspect-ratio:3/4;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;box-shadow:var(--shadow);}
 .photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
@@ -276,8 +166,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .photo-del{background:var(--red);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
 .photo-date{position:absolute;top:6px;left:6px;background:rgba(0,0,0,0.6);padding:2px 7px;border-radius:4px;font-size:9px;color:#fff;font-family:'DM Mono',monospace;}
 .privacy-note{background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);border-radius:8px;padding:9px 13px;margin-bottom:12px;font-size:10px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace;}
-
-/* AI */
 .ai-console{background:rgba(37,99,235,0.05);border:1px solid rgba(37,99,235,0.2);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow);}
 .ai-header{font-size:10px;color:var(--accent);font-weight:900;letter-spacing:1.5px;margin-bottom:10px;font-family:'DM Mono',monospace;}
 .ai-text{font-size:14px;line-height:1.7;color:var(--text);font-style:italic;}
@@ -285,8 +173,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .ai-btn:disabled{opacity:0.5;cursor:not-allowed;}
 .ai-key-row{display:flex;gap:8px;margin-top:10px;}
 .ai-key-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:10px 12px;flex:1;}
-
-/* SETTINGS */
 .settings-sec{margin-bottom:24px;}
 .settings-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;}
 .settings-input{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 13px;width:100%;margin-bottom:8px;box-shadow:var(--shadow);}
@@ -299,8 +185,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .manage-row:last-child{border-bottom:none;}
 .del-sm{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 10px;cursor:pointer;font-size:10px;font-weight:700;}
 .danger-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:var(--radius);padding:11px;width:100%;font-size:12px;cursor:pointer;text-transform:uppercase;font-weight:600;}
-
-/* PROUD */
 .proud-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.6);display:flex;align-items:center;justify-content:center;z-index:5000;padding:20px;backdrop-filter:blur(8px);}
 .proud-modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px 28px;width:100%;max-width:340px;text-align:center;box-shadow:0 24px 64px rgba(37,99,235,0.2);}
 .proud-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--accent);margin-bottom:8px;}
@@ -308,8 +192,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .proud-btns{display:flex;gap:12px;}
 .proud-yes{flex:1;background:var(--green);color:#fff;border:none;border-radius:12px;padding:16px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer;}
 .proud-no{flex:1;background:var(--surface2);color:var(--muted);border:1.5px solid var(--border);border-radius:12px;padding:16px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer;}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.5);display:flex;align-items:center;justify-content:center;z-index:2000;padding:20px;backdrop-filter:blur(6px);}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:400px;box-shadow:0 24px 64px rgba(37,99,235,0.18);}
 .modal-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:16px;color:var(--accent);}
@@ -318,7 +200,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .modal-btn{flex:1;padding:11px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;}
 .modal-btn.confirm{background:var(--accent);border:none;color:#fff;}
 .modal-btn.cancel{background:none;border:1px solid var(--border);color:var(--muted);}
-
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--accent);color:#fff;padding:10px 22px;border-radius:40px;font-size:11px;font-weight:700;z-index:3000;opacity:0;transition:all 0.3s;pointer-events:none;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .empty-state{text-align:center;padding:36px 16px;color:var(--muted);}
@@ -328,36 +209,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 <body>
 
 <div class="top-frame">
-  <!-- Motto -->
   <div class="header-motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
-
-  <!-- Countdown top right -->
   <div class="countdown-wrap">
     <div class="countdown-num" id="countdownNum">—</div>
     <div class="countdown-label">Days Left</div>
   </div>
-
-  <!-- Glass logo box -->
   <div class="glass-box">
-    <!-- Big bold DELTA3 text -->
-    <div class="glass-logo-text">DELTA3</div>
-    <!-- Triangle + 3 icon to the right -->
-    <svg class="glass-logo-icon" width="72" height="64" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Outer triangle outline -->
-      <path d="M36 4L68 60H4L36 4Z" stroke="white" stroke-width="4" stroke-linejoin="round" fill="none"/>
-      <!-- Left filled section (creates the D3 cutout) -->
-      <path d="M36 18L18 52H36V18Z" fill="rgba(180,205,245,0.5)"/>
-      <!-- Inner triangle left outline -->
-      <path d="M36 18L20 50H36" stroke="white" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
-      <!-- The 3 on the right -->
-      <path d="M40 26 L52 26" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <path d="M40 36 L52 36" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <path d="M40 46 L52 46" stroke="white" stroke-width="3" stroke-linecap="round"/>
-      <path d="M52 26 Q58 31 52 36" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <path d="M52 36 Q58 41 52 46" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
-    </svg>
+    <img src="logo.png" alt="DELTA3" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <div style="display:none;font-family:'DM Sans',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-1px;">DELTA3</div>
   </div>
-
   <div class="month-year-display" id="monthYearDisplay">MAY 2026</div>
   <div class="date-strip-wrap" id="dateStrip"></div>
   <div class="score-row">
@@ -382,8 +242,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 <div class="toast" id="toast"></div>
 
 <script>
-const TODAY = new Date();
-const START_DATE = new Date('2025-04-11');
+const TODAY=new Date();
+const START_DATE=new Date('2025-04-11');
 function fmtDate(d){return d.toISOString().slice(0,10);}
 
 const QUOTES=[
@@ -447,22 +307,20 @@ const QUOTES=[
   {text:"A river cuts through rock not because of its power but because of its persistence.",author:"Jim Watkins"},
   {text:"The best revenge is massive success.",author:"Frank Sinatra"},
   {text:"You don't get what you wish for. You get what you work for.",author:"Daniel Milstein"},
-  {text:"Continuous improvement is better than delayed perfection.",author:"Mark Twain"},
-  {text:"I will prepare and some day my chance will come.",author:"Abraham Lincoln"},
   {text:"Hardships often prepare ordinary people for an extraordinary destiny.",author:"C.S. Lewis"},
   {text:"It always seems impossible until it's done.",author:"Nelson Mandela"},
-  {text:"The secret of getting ahead is getting started.",author:"Mark Twain"},
   {text:"Believe you can and you're halfway there.",author:"Theodore Roosevelt"},
-  {text:"Imagination is more important than knowledge.",author:"Albert Einstein"},
   {text:"In the middle of every difficulty lies opportunity.",author:"Albert Einstein"},
-  {text:"Do not go where the path may lead, go instead where there is no path and leave a trail.",author:"Ralph Waldo Emerson"},
-  {text:"Make each day your masterpiece.",author:"John Wooden"},
+  {text:"Imagination is more important than knowledge.",author:"Albert Einstein"},
   {text:"Knowing yourself is the beginning of all wisdom.",author:"Aristotle"},
   {text:"Push yourself because no one else is going to do it for you.",author:"Unknown"},
   {text:"When you feel like quitting, think about why you started.",author:"Unknown"},
+  {text:"Do not go where the path may lead, go instead where there is no path and leave a trail.",author:"Ralph Waldo Emerson"},
+  {text:"I will prepare and some day my chance will come.",author:"Abraham Lincoln"},
+  {text:"Continuous improvement is better than delayed perfection.",author:"Mark Twain"},
 ];
 
-let currentQuoteIdx = Math.floor(Math.random() * QUOTES.length);
+let currentQuoteIdx=Math.floor(Math.random()*QUOTES.length);
 function getCurrentQuote(){return QUOTES[currentQuoteIdx];}
 function newQuote(){let n=Math.floor(Math.random()*QUOTES.length);while(n===currentQuoteIdx&&QUOTES.length>1)n=Math.floor(Math.random()*QUOTES.length);currentQuoteIdx=n;render();}
 function isQuoteSaved(){return(state.savedQuotes||[]).some(q=>q.idx===currentQuoteIdx);}
@@ -473,6 +331,17 @@ function heartQuote(){
   saveState();render();
 }
 function removeSavedQuote(idx){state.savedQuotes=(state.savedQuotes||[]).filter(q=>q.idx!==idx);saveState();render();}
+
+function renderQuoteCard(){
+  const q=getCurrentQuote();
+  const saved=isQuoteSaved();
+  return `<div class="quote-card">
+    <button class="quote-heart" onclick="heartQuote()">${saved?'❤️':'🤍'}</button>
+    <div class="quote-text">"${q.text}"</div>
+    <div class="quote-author">— ${q.author}</div>
+    <button class="quote-new-btn" onclick="newQuote()">↻ New Quote</button>
+  </div>`;
+}
 
 const DEFAULT_STATE={
   motto:'MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT',
@@ -593,32 +462,26 @@ function render(){
   attachEvents();
 }
 
+function renderSavedQuotes(){
+  if(!(state.savedQuotes||[]).length)return'';
+  let h=`<div style="margin-bottom:14px;"><div class="sec-hdr"><div class="sec-title" style="font-size:16px;">Saved Quotes</div></div>`;
+  state.savedQuotes.slice().reverse().forEach(sq=>{
+    h+=`<div class="saved-quote-item">
+      <div style="flex:1;"><div class="saved-quote-text">"${sq.text}"</div><div class="saved-quote-author">— ${sq.author}</div></div>
+      <button class="saved-quote-del" onclick="removeSavedQuote(${sq.idx})">✕</button>
+    </div>`;
+  });
+  return h+`</div>`;
+}
+
 function renderHabits(){
   const logs=state.habitLogs[selectedDate]||{};
   const done=state.habits.filter(h=>logs[h.id]==='done').length;
   const pct=state.habits.length?Math.round(done/state.habits.length*100):0;
   const circ=2*Math.PI*20,off=circ-(pct/100)*circ;
   const ci=state.checkinLogs[selectedDate]||{mood:0,note:''};
-  const q=getCurrentQuote();
-  const saved=isQuoteSaved();
 
-  let h=`<div class="quote-card">
-    <button class="quote-heart" onclick="heartQuote()">${saved?'❤️':'🤍'}</button>
-    <div class="quote-text">"${q.text}"</div>
-    <div class="quote-author">— ${q.author}</div>
-    <button class="quote-new-btn" onclick="newQuote()">↻ New Quote</button>
-  </div>`;
-
-  if((state.savedQuotes||[]).length>0){
-    h+=`<div style="margin-bottom:14px;"><div class="sec-hdr"><div class="sec-title" style="font-size:16px;">Saved Quotes</div></div>`;
-    state.savedQuotes.slice().reverse().forEach(sq=>{
-      h+=`<div class="saved-quote-item">
-        <div style="flex:1;"><div class="saved-quote-text">"${sq.text}"</div><div class="saved-quote-author">— ${sq.author}</div></div>
-        <button class="saved-quote-del" onclick="removeSavedQuote(${sq.idx})">✕</button>
-      </div>`;
-    });
-    h+=`</div>`;
-  }
+  let h=renderQuoteCard()+renderSavedQuotes();
 
   h+=`<div class="checkin-card"><div class="checkin-lbl">Morning Check-In</div><div class="mood-row">`;
   [['1','😶'],['2','😕'],['3','😐'],['4','🙂'],['5','💪']].forEach(([v,e])=>{h+=`<button class="mood-btn${ci.mood==v?' sel':''}" onclick="setMood('${v}')">${e}<br><span style="font-size:9px;">${v}</span></button>`;});
@@ -684,7 +547,8 @@ function setMood(v){if(!state.checkinLogs[selectedDate])state.checkinLogs[select
 function deleteWin(i){state.wins.splice(i,1);saveState();render();}
 
 function renderLift(){
-  let h=`<div class="sec-hdr"><div class="sec-title">Workout Log</div><button class="add-btn" onclick="openModal('addDay')">+ Add Day</button></div>`;
+  let h=renderQuoteCard();
+  h+=`<div class="sec-hdr"><div class="sec-title">Workout Log</div><button class="add-btn" onclick="openModal('addDay')">+ Add Day</button></div>`;
   if(!state.lifts.length)h+=`<div class="empty-state">No workouts yet.</div>`;
   state.lifts.forEach(day=>{
     const open=expandedWorkout===day.id;
@@ -742,7 +606,8 @@ function deleteWorkoutDay(id){state.lifts=state.lifts.filter(d=>d.id!==id);saveS
 
 function renderEating(){
   const log=state.eatingLogs[selectedDate]||{};
-  let h=`<div class="sec-hdr"><div class="sec-title">Eating Log</div><button class="add-btn" onclick="openModal('addRule')">+ Rule</button></div>`;
+  let h=renderQuoteCard();
+  h+=`<div class="sec-hdr"><div class="sec-title">Eating Log</div><button class="add-btn" onclick="openModal('addRule')">+ Rule</button></div>`;
   h+=`<div class="r-grid">`;
   state.restrictions.forEach(r=>{
     const s=log[r.id]||'none';
@@ -770,7 +635,8 @@ function renderWeight(){
   const todayW=state.weightLog[fmtDate(TODAY)]||'';
   const startW=weights[0]||0,curW=weights[weights.length-1]||0;
   const diff=(curW-startW).toFixed(1);
-  let h=`<div class="sec-hdr"><div class="sec-title">Weight Tracker</div></div>`;
+  let h=renderQuoteCard();
+  h+=`<div class="sec-hdr"><div class="sec-title">Weight Tracker</div></div>`;
   h+=`<div class="wlog-row"><input class="w-input" id="weightIn" type="number" step="0.1" value="${todayW}" placeholder="Today's weight (lbs)"/><button class="w-log-btn" onclick="saveWeight()">Log It</button></div>`;
   if(weights.length>=2){
     h+=`<div class="graph-wrap"><canvas id="wGraph" style="width:100%;height:160px;display:block;"></canvas>
@@ -830,7 +696,8 @@ function drawGraph(){
 }
 
 function renderPhotos(){
-  let h=`<div class="sec-hdr"><div class="sec-title">Progress Photos</div><button class="add-btn" onclick="triggerPhoto()">+ Photo</button></div>`;
+  let h=renderQuoteCard();
+  h+=`<div class="sec-hdr"><div class="sec-title">Progress Photos</div><button class="add-btn" onclick="triggerPhoto()">+ Photo</button></div>`;
   h+=`<div class="privacy-note">🔒 Photos stored only in DELTA3 — never saved to camera roll</div>`;
   if(!state.photos.length){
     h+=`<div class="empty-state"><div style="font-size:40px;margin-bottom:8px;">📸</div>No photos yet.</div>`;
@@ -852,7 +719,8 @@ function deletePhoto(i){if(confirm('Delete?')){state.photos.splice(i,1);saveStat
 function renderAI(){
   const aiText=state.aiText||'Awaiting your performance scan.';
   const key=state.apiKey||'';
-  return `<div class="ai-console"><div class="ai-header">DELTA3_OPERATOR</div><div class="ai-text" id="aiText">${aiText}</div></div>
+  let h=renderQuoteCard();
+  h+=`<div class="ai-console"><div class="ai-header">DELTA3_OPERATOR</div><div class="ai-text" id="aiText">${aiText}</div></div>
   <button class="ai-btn" id="aiRunBtn" onclick="runAI()">Run Performance Scan</button>
   <div style="background:rgba(37,99,235,0.05);border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius);padding:14px 16px;margin-top:6px;">
     <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;">Gemini API Key</div>
@@ -862,6 +730,7 @@ function renderAI(){
     </div>
     <div style="font-size:10px;color:var(--muted);margin-top:8px;">Get a free key at aistudio.google.com</div>
   </div>`;
+  return h;
 }
 
 async function runAI(){
@@ -904,7 +773,8 @@ MOTTO: [motto]`;
 function saveApiKey(){const k=document.getElementById('apiKeyInput').value.trim();if(k){state.apiKey=k;saveState();toast('Key saved!');}}
 
 function renderSettings(){
-  let h=`<div class="settings-sec">
+  let h=renderQuoteCard();
+  h+=`<div class="settings-sec">
     <div class="settings-lbl">App Motto</div>
     <input class="settings-input" id="s_motto" value="${state.motto.replace(/"/g,'&quot;')}"/>
     <div class="settings-lbl" style="margin-top:4px;">Goal Date</div>
