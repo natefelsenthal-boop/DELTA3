@@ -25,82 +25,76 @@
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
-/* ── FROSTED GLASS TOP FRAME ── */
+/* ── PREMIUM HEADER STYLE ── */
 .top-frame {
   flex-shrink: 0;
-  background: linear-gradient(160deg, rgba(235, 242, 255, 0.97) 0%, rgba(218, 232, 255, 0.95) 100%);
-  border-bottom: 1px solid rgba(37, 99, 235, 0.12);
-  box-shadow: 0 4px 24px rgba(37, 99, 235, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  padding-top: 40px;
   position: relative;
-}
-
-.top-frame::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent), #60A5FA, var(--accent));
-  opacity: 0.7;
-}
-
-/* ── LOGO & HEADER LAYOUT ── */
-.header {
-  padding: 48px 22px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.logo-img {
-  height: 42px; /* Adjusted for better balance */
-  width: auto;
-  display: block;
-  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.25));
-}
-
-.logo-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  text-align: center;
+  background: linear-gradient(180deg, #D6E4FF 0%, #A5C2F1 100%);
 }
 
 .motto {
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(15, 23, 42, 0.6);
   text-transform: uppercase;
-  margin-top: 2px;
   font-family: 'DM Mono', monospace;
-  max-width: 240px;
-  line-height: 1.7;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
 }
 
-.countdown-block { text-align: right; }
+.glass-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  margin: 0 20px 25px;
+  padding: 30px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.logo-svg {
+  height: 48px;
+  width: auto;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+}
+
+.countdown-top-right {
+  position: absolute;
+  top: 45px;
+  right: 25px;
+  text-align: right;
+}
+
 .countdown-num {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 42px;
-  color: var(--accent);
+  font-size: 32px;
+  color: white;
   line-height: 1;
-  text-shadow: 0 2px 12px rgba(37, 99, 235, 0.2);
 }
+
 .countdown-label {
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 2px;
+  font-size: 8px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 1px;
   text-transform: uppercase;
   font-family: 'DM Mono', monospace;
 }
 
 .month-year-display {
-  padding: 2px 22px 0;
+  padding: 0 22px 5px;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 3px;
   color: var(--accent);
-  opacity: 0.7;
+  text-align: left;
 }
-
 /* DATE STRIP */
 .date-strip-wrap { display: flex; gap: 6px; overflow-x: auto; padding: 10px 22px 8px; scrollbar-width: none; }
 .date-strip-wrap::-webkit-scrollbar { display: none; }
@@ -279,15 +273,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 <body>
 
 <div class="top-frame">
-  <div class="header">
-    <div class="logo-wrap">
-      <img src="delta3-logo.png" alt="DELTA3" class="logo-img">
-      <div class="motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
-    </div>
-    <div class="countdown-block">
-      <div class="countdown-num" id="countdownNum">—</div>
-      <div class="countdown-label">Days Left</div>
-    </div>
+  <div class="motto" id="mottoDisplay">LOG EVERYTHING. OWN YOUR STORY.</div>
+
+  <div class="countdown-top-right">
+    <div class="countdown-num" id="countdownNum">—</div>
+    <div class="countdown-label">Days Left</div>
+  </div>
+
+  <div class="glass-box">
+    <svg class="logo-svg" viewBox="0 0 280 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45 10L75 50H15L45 10Z" fill="white"/>
+      <path d="M55 30H70L68 36H53L55 30Z" fill="white"/>
+      <path d="M50 38H65L63 44H48L50 38Z" fill="white"/>
+      <text x="85" y="44" font-family="'DM Sans', sans-serif" font-weight="800" font-size="42" fill="white" letter-spacing="-1.5">DELTA3</text>
+    </svg>
   </div>
   <div class="month-year-display" id="monthYearDisplay">MAY 2026</div>
   <div class="date-strip-wrap" id="dateStrip"></div>
