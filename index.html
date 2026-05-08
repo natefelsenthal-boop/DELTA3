@@ -17,61 +17,28 @@
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
-/* DARK GLASS BOX */
-.glass-box {
-  margin: 0 18px 18px;
-  background: rgba(177, 197, 237, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 40px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(10, 20, 40, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative; /* Anchor for the 13 */
-  overflow: hidden;
-}
-.glass-box img { height: 180px; width: auto; object-fit: contain; display: block; max-width: 100%; margin: -20px 0; }
+/* ── HEADER ── */
+.top-frame{flex-shrink:0;background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);position:relative;}
+.header-motto{text-align:center;padding:44px 80px 12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(15,23,42,0.55);text-transform:uppercase;font-weight:500;}
+.countdown-wrap{position:absolute;top:12px;right:20px;text-align:right;}
+.countdown-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
+.countdown-label{font-size:8px;color:rgba(255,255,255,0.85);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
 
-.countdown-wrap-new {
-  position: absolute;
-  bottom: 15px;
-  right: 25px; /* Moved to bottom right */
-  text-align: right;
+/* GLASS BOX */
+.glass-box{
+  margin:0 18px 16px;
+  background:rgba(150,185,240,0.35);
+  border:1px solid rgba(255,255,255,0.4);
+  border-radius:20px;
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 32px rgba(31,60,120,0.1),inset 0 1px 0 rgba(255,255,255,0.5);
+  overflow:hidden;
 }
-.countdown-num-big {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px; /* Made it bigger */
-  color: #fff;
-  line-height: 0.8;
-}
-.countdown-label-sm {
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-family: 'DM Mono', monospace;
-}
-
-/* QUOTE CARD */
-.quote-card{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(96,165,250,0.04));border:1px solid rgba(37,99,235,0.13);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;}
-.quote-text{font-family:'DM Sans',sans-serif;font-size:15px;font-style:italic;font-weight:500;color:var(--text);line-height:1.65;margin-bottom:8px;padding-right:36px;}
-.quote-author{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;}
-.quote-heart{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;transition:transform 0.2s;line-height:1;}
-.quote-heart:hover{transform:scale(1.2);}
-.quote-new-btn{margin-top:12px;background:none;border:1px solid rgba(37,99,235,0.2);color:var(--accent);border-radius:8px;padding:6px 14px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;}
-.quote-new-btn:hover{background:rgba(37,99,235,0.06);}
-
-/* SAVED QUOTES */
-.saved-quote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
-.saved-quote-text{font-size:12px;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:500;line-height:1.5;color:var(--text);}
-.saved-quote-author{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;font-weight:700;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
-.saved-quote-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;opacity:0;transition:all 0.15s;padding:2px;flex-shrink:0;}
-.saved-quote-item:hover .saved-quote-del{opacity:1;}
+.glass-box img{height:90px;width:auto;object-fit:contain;display:block;max-width:90%;}
 
 /* DATE STRIP */
-.month-year-display{padding:0 22px 5px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
+.month-year-display{padding:0 22px 4px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
 .date-strip-wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 22px 8px;scrollbar-width:none;}
 .date-strip-wrap::-webkit-scrollbar{display:none;}
 .date-pill{min-width:56px;border-radius:10px;border:1.5px solid rgba(37,99,235,0.15);background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);text-align:center;cursor:pointer;flex-shrink:0;overflow:hidden;position:relative;transition:all 0.15s;}
@@ -106,6 +73,23 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);}
 .add-btn{background:var(--accent);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;box-shadow:0 2px 8px rgba(37,99,235,0.25);}
 .add-btn:hover{background:var(--accent2);}
+
+/* QUOTE CARD */
+.quote-card{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(96,165,250,0.04));border:1px solid rgba(37,99,235,0.13);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;}
+.quote-text{font-family:'DM Sans',sans-serif;font-size:15px;font-style:italic;font-weight:500;color:var(--text);line-height:1.65;margin-bottom:8px;padding-right:36px;}
+.quote-author{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;}
+.quote-heart{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;transition:transform 0.2s;line-height:1;}
+.quote-heart:hover{transform:scale(1.2);}
+.quote-new-btn{margin-top:12px;background:none;border:1px solid rgba(37,99,235,0.2);color:var(--accent);border-radius:8px;padding:6px 14px;font-size:10px;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:700;transition:all 0.15s;}
+.quote-new-btn:hover{background:rgba(37,99,235,0.06);}
+
+/* SAVED QUOTES */
+.saved-quote-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:flex-start;gap:10px;box-shadow:var(--shadow);}
+.saved-quote-text{font-size:12px;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:500;line-height:1.5;color:var(--text);}
+.saved-quote-author{font-size:9px;color:var(--accent);font-family:'DM Mono',monospace;font-weight:700;margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
+.saved-quote-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;opacity:0;transition:all 0.15s;padding:2px;flex-shrink:0;}
+.saved-quote-item:hover .saved-quote-del{opacity:1;}
+
 .checkin-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
 .checkin-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
 .mood-row{display:flex;gap:6px;margin-bottom:10px;}
@@ -224,33 +208,36 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 </style>
 </head>
 <body>
-<div class="top-frame" style="padding-top: 40px; background: linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);">
-  
-  <div class="glass-box" style="margin: 0 18px 40px; background: rgba(177,197,237,0.4); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 40px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(10,20,40,0.35); position: relative; overflow: hidden;">
-    
+
+<div class="top-frame">
+  <div class="header-motto" id="mottoDisplay">MAKE HARD DECISIONS / IF IT WAS EASY EVERYONE WOULD DO IT</div>
+  <div class="countdown-wrap">
+    <div class="countdown-num" id="countdownNum">—</div>
+    <div class="countdown-label">Days Left</div>
+  </div>
+  <div class="glass-box">
     <img src="logo.png" alt="DELTA3" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
-    <div style="display:none;font-family:'Bebas Neue',sans-serif;font-size:48px;color:#fff;">DELTA3</div>
-    
-    <div id="mottoDisplay" style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:3px; color:#fff; text-transform:uppercase; margin-top: -15px; font-weight: 700; opacity: 0.9;">
-      LOG EVERYTHING. OWN YOUR STORY.
-    </div>
-
-    <div style="position: absolute; bottom: 15px; right: 25px; text-align: right;">
-      <div id="countdownNum" style="font-family:'Bebas Neue',sans-serif; font-size: 52px; color: #fff; line-height: 0.8;">13</div>
-      <div style="font-size: 8px; color: rgba(255, 255, 255, 0.7); letter-spacing: 1.5px; text-transform: uppercase; font-family: 'DM Mono', monospace;">DAYS LEFT</div>
-    </div>
-
-  </div> </div> <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-<div class="nav">
-  <button class="nav-btn active" onclick="showTab('habits')">Habits</button>
-  <button class="nav-btn" onclick="showTab('lift')">Lift</button>
-  <button class="nav-btn" onclick="showTab('eating')">Eating</button>
-  <button class="nav-btn" onclick="showTab('weight')">Weight</button>
-  <button class="nav-btn" onclick="showTab('photos')">Photos</button>
-  <button class="nav-btn" onclick="showTab('ai')">AI</button>
-  <button class="nav-btn" onclick="showTab('settings')">Settings</button>
+    <div style="display:none;font-family:'DM Sans',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-1px;">DELTA3</div>
+  </div>
+  <div class="month-year-display" id="monthYearDisplay">MAY 2026</div>
+  <div class="date-strip-wrap" id="dateStrip"></div>
+  <div class="score-row">
+    <div class="score-card"><div class="score-label">Habits</div><div class="score-bar"><div class="score-fill" id="habitBar" style="width:0%"></div></div></div>
+    <div class="score-card"><div class="score-label">Eating</div><div class="score-bar"><div class="score-fill" id="eatingBar" style="width:0%"></div></div></div>
+    <div class="score-card"><div class="score-label">Lifts</div><div class="score-bar"><div class="score-fill" id="liftBar" style="width:0%"></div></div></div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('habits')">Habits</button>
+    <button class="nav-btn" onclick="showTab('lift')">Lift</button>
+    <button class="nav-btn" onclick="showTab('eating')">Eating</button>
+    <button class="nav-btn" onclick="showTab('weight')">Weight</button>
+    <button class="nav-btn" onclick="showTab('photos')">Photos</button>
+    <button class="nav-btn" onclick="showTab('ai')">AI</button>
+    <button class="nav-btn" onclick="showTab('settings')">Settings</button>
+  </div>
 </div>
-  
+
 <div class="main" id="mainContent"></div>
 <input type="file" id="photoInput" accept="image/*">
 <div class="toast" id="toast"></div>
@@ -494,13 +481,10 @@ function renderHabits(){
   const pct=state.habits.length?Math.round(done/state.habits.length*100):0;
   const circ=2*Math.PI*20,off=circ-(pct/100)*circ;
   const ci=state.checkinLogs[selectedDate]||{mood:0,note:''};
-
   let h=renderQuoteCard()+renderSavedQuotes();
-
   h+=`<div class="checkin-card"><div class="checkin-lbl">Morning Check-In</div><div class="mood-row">`;
   [['1','😶'],['2','😕'],['3','😐'],['4','🙂'],['5','💪']].forEach(([v,e])=>{h+=`<button class="mood-btn${ci.mood==v?' sel':''}" onclick="setMood('${v}')">${e}<br><span style="font-size:9px;">${v}</span></button>`;});
   h+=`</div><textarea class="ci-input" id="ciNote" placeholder="How are you feeling? What's the plan?">${ci.note||''}</textarea></div>`;
-
   h+=`<div class="ring-wrap">
     <div style="position:relative;width:50px;height:50px;flex-shrink:0;">
       <svg width="50" height="50" viewBox="0 0 50 50" style="transform:rotate(-90deg)">
@@ -514,7 +498,6 @@ function renderHabits(){
       <div style="height:5px;background:#E2E8F0;border-radius:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:#2563EB;border-radius:3px;transition:width 0.4s;"></div></div>
     </div>
   </div>`;
-
   h+=`<div class="sec-hdr"><div class="sec-title">Daily Habits</div><button class="add-btn" onclick="openModal('addHabit')">+ Add</button></div>`;
   if(!state.habits.length)h+=`<div class="empty-state">No habits yet.</div>`;
   state.habits.forEach(habit=>{
@@ -527,7 +510,6 @@ function renderHabits(){
       <button class="hdel" onclick="event.stopPropagation();deleteHabit(${habit.id})">✕</button>
     </div></div>`;
   });
-
   const proudDays=Object.entries(state.proudLog||{}).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,14);
   if(proudDays.length){
     h+=`<div style="margin-top:16px;margin-bottom:12px;"><div class="sec-title" style="font-size:16px;margin-bottom:8px;">Proud History</div><div style="display:flex;gap:6px;flex-wrap:wrap;">`;
@@ -538,7 +520,6 @@ function renderHabits(){
     });
     h+=`</div></div>`;
   }
-
   h+=`<div style="margin-top:12px;"><div class="sec-hdr"><div class="sec-title">Wins Wall</div><button class="add-btn" onclick="openModal('addWin')">+ Log Win</button></div>`;
   if(!state.wins.length)h+=`<div class="empty-state" style="padding:20px 0;">No wins yet. Every good day counts.</div>`;
   state.wins.slice().reverse().forEach((w,ri)=>{
