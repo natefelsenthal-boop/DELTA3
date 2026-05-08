@@ -17,29 +17,42 @@
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;}
 
-/* ── HEADER ── */
-.top-frame{flex-shrink:0;background:linear-gradient(180deg,#C8D9F8 0%,#A8C4F0 60%,#D0DCF8 100%);position:relative;}
-.header-motto{text-align:center;padding:44px 80px 14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(15,23,42,0.55);text-transform:uppercase;font-weight:500;}
-.countdown-wrap{position:absolute;top:12px;right:20px;text-align:right;}
-.countdown-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
-.countdown-label{font-size:8px;color:rgba(255,255,255,0.8);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:2px;}
-
 /* DARK GLASS BOX */
-.glass-box{
-  margin:0 18px 18px;
-  background:rgba(177,197,237,0.4);
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:20px;
-  padding:40px 24px 30px; 
-  display:flex;
-  flex-direction:column; 
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 8px 32px rgba(10,20,40,0.35),inset 0 1px 0 rgba(255,255,255,0.1);
-  overflow:hidden;
-  position:relative; /* <--- CRITICAL: Keeps the 13 in the corner */
+.glass-box {
+  margin: 0 18px 18px;
+  background: rgba(177, 197, 237, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(10, 20, 40, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative; /* Anchor for the 13 */
+  overflow: hidden;
 }
-.glass-box img{height: 180px; width: auto; object-fit: contain; display: block; max-width: 100%; margin: -20px 0;}
+.glass-box img { height: 180px; width: auto; object-fit: contain; display: block; max-width: 100%; margin: -20px 0; }
+
+.countdown-wrap-new {
+  position: absolute;
+  bottom: 15px;
+  right: 25px; /* Moved to bottom right */
+  text-align: right;
+}
+.countdown-num-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px; /* Made it bigger */
+  color: #fff;
+  line-height: 0.8;
+}
+.countdown-label-sm {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
 
 /* QUOTE CARD */
 .quote-card{background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(96,165,250,0.04));border:1px solid rgba(37,99,235,0.13);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;}
@@ -219,17 +232,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     <img src="logo.png" alt="DELTA3" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
     <div style="display:none;font-family:'DM Sans',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-1px;">DELTA3</div>
     
-    <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:2px; color:#fff; text-transform:uppercase; margin-top:10px; opacity:0.8;">
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:#fff; text-transform:uppercase; margin-top: -12px; opacity:0.9;">
       LOG EVERYTHING. OWN YOUR STORY.
     </div>
 
-    <div style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:1.5px; color:var(--accent); text-transform:uppercase; font-weight:700; margin-top:5px;">
-      GYM DISCIPLINE // ROME RESEARCH // SENIOR SEMINARS
-    </div>
-
-    <div style="position:absolute; bottom:12px; left:18px; text-align:left;">
-      <div class="countdown-num" id="countdownNum" style="font-size:28px; line-height:1; text-shadow:none; color:#fff;">13</div>
-      <div style="font-size:7px; text-transform:uppercase; font-family:'DM Mono',monospace; color:#fff; opacity:0.7;">Days Left</div>
+    <div class="countdown-wrap-new">
+      <div class="countdown-num-big" id="countdownNum">13</div>
+      <div class="countdown-label-sm">DAYS LEFT</div>
     </div>
   </div>
 
