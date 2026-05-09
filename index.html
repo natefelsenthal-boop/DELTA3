@@ -52,19 +52,33 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-bar{height:14px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 8px;}
-.glass-center img{height:100px;width:auto;object-fit:contain;display:block;max-width:100%;}
-.glass-motto{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2.5px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;margin-top:0;text-align:center;max-width:220px;line-height:1.4;padding-right:55px;}
-
-.glass-countdown{position:absolute;bottom:10px;right:14px;text-align:right;}
-.glass-countdown-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
-.glass-countdown-label{font-size:7px;color:rgba(255,255,255,0.75);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:1px;}
-
 @media(min-width:700px){
-  .glass-center img{height:250px;}
-  .glass-motto{font-size:10px;max-width:340px;padding-right:70px;}
-  .glass-box{min-height:180px;}
-  .glass-countdown-num{font-size:48px;}
+  /* 1. Make the symbol huge but allow the motto to overlap the bottom whitespace */
+  .glass-center img {
+    height: 220px; /* Slightly scaled back for better fit */
+    margin-bottom: 0;
+  }
+
+  /* 2. Pull the motto UP and remove the right padding that was pushing it off-center */
+  .glass-motto {
+    font-size: 11px;
+    max-width: 500px;
+    padding-right: 0; /* THE FIX: Centers it under the logo */
+    margin-top: -30px !important; /* THE FIX: Snaps it to the bottom of the triangle */
+    line-height: 1.2;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  }
+
+  /* 3. Constrain the box height so it doesn't look like a giant blue void */
+  .glass-box {
+    min-height: 250px; 
+    padding-bottom: 20px;
+  }
+
+  /* 4. Keep the countdown in the corner without it feeling lost */
+  .glass-countdown-num {
+    font-size: 52px;
+  }
 }
 
 .month-year-display{padding:0 22px 4px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--accent);}
