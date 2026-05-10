@@ -53,31 +53,48 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
 @media(min-width:700px){
-  /* 1. Make the symbol huge but allow the motto to overlap the bottom whitespace */
+  /* 1. Organize the header into 3 clean columns */
+  .glass-box {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px; 
+    align-items: center;
+    min-height: 280px; 
+    padding: 20px 40px;
+  }
+
+  /* 2. Scale the symbol to command the screen */
+  .glass-center {
+    grid-column: 2; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .glass-center img {
-    height: 220px; /* Slightly scaled back for better fit */
+    height: 240px; /* Bolder presence */
     margin-bottom: 0;
   }
 
-  /* 2. Pull the motto UP and remove the right padding that was pushing it off-center */
+  /* 3. Snap the motto tight and remove the right-side padding */
   .glass-motto {
     font-size: 11px;
     max-width: 500px;
-    padding-right: 0; /* THE FIX: Centers it under the logo */
-    margin-top: -30px !important; /* THE FIX: Snaps it to the bottom of the triangle */
+    padding-right: 0; 
+    margin-top: -45px !important; /* Aggressive pull-up to close the gap */
     line-height: 1.2;
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    text-align: center;
   }
 
-  /* 3. Constrain the box height so it doesn't look like a giant blue void */
-  .glass-box {
-    min-height: 250px; 
-    padding-bottom: 20px;
+  /* 4. Lock the countdown to the right so it stops jumping around */
+  .glass-countdown {
+    grid-column: 3;
+    position: static; 
+    text-align: right;
   }
 
-  /* 4. Keep the countdown in the corner without it feeling lost */
   .glass-countdown-num {
-    font-size: 52px;
+    font-size: 64px;
   }
 }
 
