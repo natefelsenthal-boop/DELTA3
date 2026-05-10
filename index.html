@@ -53,28 +53,28 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
 @media(min-width:700px){
-  /* 1. Force the container box to be much sleeker/shorter on desktop */
+  /* 1. Sleek desktop map with tighter columns */
   .glass-box {
     display: grid;
     grid-template-columns: 180px 1fr 180px; 
     align-items: center;
-    min-height: 180px; /* Crucial change: reduce this significantly */
-    padding: 10px 40px; /* Tighten internal padding */
-    overflow: visible; /* Ensure nothing is cut off */
+    min-height: 180px; /* Forces the box to be much sleeker/shorter */
+    padding: 10px 40px; 
+    overflow: visible;
   }
 
-  /* 2. Scale the symbol to be large but allow overlap to keep the box short */
+  /* 2. Massive symbol centering */
   .glass-center {
     grid-column: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    top: -10px; /* slightly pull the whole group up */
+    top: -10px;
   }
 
   .glass-center img {
-    height: 180px; /* Hero scale on desktop */
+    height: 180px; /* True Hero scale on desktop */
     width: auto;
     margin-bottom: 0;
   }
@@ -83,40 +83,45 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   .glass-motto {
     font-size: 11px;
     max-width: 480px;
-    margin-top: -38px !important; /* Forces overlap to eliminate the void */
+    margin-top: -38px !important; /* Pulls motto up tight to symbol */
     padding-right: 0; 
     text-align: center;
     letter-spacing: 3px;
     line-height: 1.2;
-    position: relative;
-    z-index: 5;
-    
-    /* THE FIX: Back to white text with a shadow for readability */
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: rgba(255, 255, 255, 0.9) !important; /* BACK TO WHITE */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-    
-    /* Ensure the weight is bold, as requested */
     font-weight: 700 !important;
   }
 
-  /* 4. The Countdown Pod - Anchored to the far right */
+  /* 4. THE FIX: The Countdown Pod - Matching image 7 precisely */
   .glass-countdown {
     grid-column: 3;
     position: static; 
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .glass-countdown-num {
-    font-size: 56px;
+    font-size: 38px !important; /* Smaller, sharper size from image 7 */
+    color: #ffffff !important; /* SOLID WHITE */
     line-height: 1;
+    text-shadow: 0 2px 12px rgba(37, 99, 235, 0.3);
   }
 
-  /* 5. Left-side Scores vertical centering */
+  .glass-countdown-label {
+    font-size: 8px !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+    letter-spacing: 1.5px;
+    margin-top: 2px;
+  }
+
+  /* 5. Left-side Scores alignment */
   .glass-scores {
     grid-column: 1;
     margin-right: 0;
-    justify-content: center;
-    padding-top: 0;
+    gap: 12px;
   }
 }
 
