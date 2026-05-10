@@ -611,7 +611,7 @@ function updateTopFrame(){
     }
     html+=`<div class="date-pill${isA?' active':''}" onclick="selectDate('${ds}')">
       <div class="stripes"><div class="s1" style="background:${s1}"></div><div class="s2" style="background:${s2}"></div><div class="s3" style="background:${s3}"></div></div>
-      <div class="date-pill-inner"><span class="dow">${isTod?'NOW':dow}</span><span class="dom">${d.getDate()}</span></div>
+      <div class="date-pill-inner"><span class="dow">${isTod?'TODAY':dow}</span><span class="dom">${d.getDate()}</span></div>
     </div>`;
   }
   wrap.innerHTML=html;
