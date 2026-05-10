@@ -93,28 +93,26 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     font-weight: 700 !important;
   }
 
-  /* 4. THE FIX: The Countdown Pod - Matching image 7 precisely */
+/* 4. Drop the countdown into the bottom-right corner */
   .glass-countdown {
     grid-column: 3;
-    position: static; 
+    position: absolute !important; /* Forces it to break the grid flow */
+    bottom: 12px;
+    right: 20px;
     text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
   }
 
   .glass-countdown-num {
-    font-size: 38px !important; /* Smaller, sharper size from image 7 */
-    color: #ffffff !important; /* SOLID WHITE */
+    font-size: 38px !important;
+    color: #ffffff !important;
     line-height: 1;
-    text-shadow: 0 2px 12px rgba(37, 99, 235, 0.3);
   }
 
   .glass-countdown-label {
     font-size: 8px !important;
     color: rgba(255, 255, 255, 0.75) !important;
     letter-spacing: 1.5px;
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   /* 5. Left-side Scores alignment */
