@@ -24,41 +24,66 @@ body.dark{
   --glass-bg:rgba(20,40,80,0.6);
 }
 
+/* REPLACE FROM HERE */
 /* MOBILE FIRST — scrollable, compact glass box */
 html,body{height:auto;overflow-x:hidden;overflow-y:auto;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:block;transition:background 0.3s,color 0.3s;}
 
-.top-frame{background:var(--header-bg);position:sticky;top:0;z-index:100;}
+.top-frame{
+  background:var(--header-bg);
+  position:sticky;
+  top:0;
+  z-index:100;
+  /* Adds the breathing room at the top of the phone screen */
+  padding-top: 20px; 
+  padding-bottom: 5px;
+}
 
 .glass-box{
-  margin:16px 14px 12px;
+  margin: 0 14px 12px;
   background:var(--glass-bg);
   border:1px solid rgba(255,255,255,0.4);
-  border-radius:18px;
-  padding:12px 14px 36px;
-  display:flex;
-  flex-direction:row;
-  align-items:center;
+  border-radius:20px;
+  padding:15px 12px 35px;
+  
+  /* GRID FOR MOBILE CENTERING */
+  display: grid;
+  grid-template-columns: 85px 1fr 85px; 
+  align-items: center;
+  
   box-shadow:0 8px 32px rgba(31,60,120,0.1),inset 0 1px 0 rgba(255,255,255,0.5);
   position:relative;
   overflow:hidden;
-  min-height:100px;
-  max-height:130px;
+  min-height:110px;
 }
 
 .glass-icons{position:absolute;top:8px;right:10px;display:flex;gap:6px;z-index:10;}
 .glass-icon-btn{background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);border-radius:7px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:background 0.15s;}
-.glass-icon-btn:hover{background:rgba(255,255,255,0.4);}
 
-.glass-scores{display:flex;flex-direction:column;justify-content:center;gap:10px;width:90px;flex-shrink:0;margin-right:10px;}
+.glass-scores{
+  grid-column: 1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+}
 .glass-score-item{display:flex;flex-direction:column;gap:3px;}
 .glass-score-label{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;font-family:'DM Mono',monospace;font-weight:700;}
 .glass-score-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 4px;}
-.glass-center img{height:55px;width:auto;object-fit:contain;display:block;max-width:100%;}
-.glass-motto{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;text-align:center;max-width:160px;line-height:1.4;padding-right:0;}
+.glass-center{
+  grid-column: 2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align: center;
+  padding:0;
+}
+.glass-center img{height:52px;width:auto;display:block;}
+.glass-motto{font-family:'DM Sans',sans-serif;font-size:7.5px;letter-spacing:1px;color:#fff;text-transform:uppercase;font-weight:700;text-align:center;max-width:140px;line-height:1.2;margin-top:0 !important;}
 
 .glass-countdown{position:absolute;bottom:8px;right:12px;text-align:right;}
 .glass-countdown-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
@@ -67,7 +92,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 @media(min-width:700px){
   html,body{height:100%;overflow:hidden;}
   body{display:flex;flex-direction:column;}
-  .top-frame{flex-shrink:0;position:static;}
+  .top-frame{flex-shrink:0;position:static;padding-top:0;}
   .main{flex:1;overflow-y:auto;padding:16px 20px 80px;}
 
   .glass-box {
@@ -97,8 +122,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     text-align: center;
   }
 
-.glass-center img {
-    height: 200px; /* Bumps it up significantly for your laptop */
+  .glass-center img {
+    height: 200px; 
     width: auto;
     display: block;
     margin: 0 auto;
@@ -111,13 +136,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     text-align: center;
     color: #fff;
     font-weight: 700;
-    /* This pulls the text up tight to the much larger logo */
     margin-top: -45px !important; 
     padding-right: 0 !important;
   }
 
   .glass-countdown {
     grid-column: 3;
+    position: static;
     text-align: right;
   }
 
@@ -125,7 +150,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   .glass-countdown-label { font-size: 8px; }
   .glass-icon-btn { width: 30px; height: 30px; font-size: 15px; }
 }
-
+/* STOP REPLACING HERE */
+  
 /* FIXES THE WEIRD DATE THING — SNAP TO LEFT */
 .month-year-display {
   padding: 12px 24px 2px !important;
