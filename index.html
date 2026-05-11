@@ -56,23 +56,31 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-center{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  pointer-events:none;
-  z-index:1;
+.glass-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%; /* Ensures the container spans enough space to center */
+  pointer-events: none;
+  z-index: 1;
+  text-align: center; /* Centers the text lines */
 }
 
-.glass-countdown{position:absolute;bottom:8px;right:12px;text-align:right;}
-.glass-countdown-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
-.glass-countdown-label{font-size:6px;color:rgba(255,255,255,0.75);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:1px;}
+.glass-motto {
+  font-size: 9px;
+  max-width: 400px;
+  margin: 0 auto; /* Keeps the block itself centered */
+  text-align: center; /* Centers the text inside the block */
+  color: #fff;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
 
 /* DESKTOP — big commanding layout */
 @media(min-width:700px){
