@@ -56,30 +56,27 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 100%; /* Ensures the container spans enough space to center */
-  pointer-events: none;
-  z-index: 1;
-  text-align: center; /* Centers the text lines */
+.glass-countdown {
+  position: absolute !important;
+  bottom: 12px;
+  right: 20px;
+  text-align: right;
+  z-index: 10;
 }
 
-.glass-motto {
-  font-size: 9px;
-  max-width: 400px;
-  margin: 0 auto; /* Keeps the block itself centered */
-  text-align: center; /* Centers the text inside the block */
-  color: #fff;
-  letter-spacing: 2px;
-  line-height: 1.2;
+.glass-countdown-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px !important; /* Makes the "10" big and bold */
+  color: #ffffff !important;
+  line-height: 0.9;
+}
+
+.glass-countdown-label {
+  font-size: 8px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 1px;
 }
 
 /* DESKTOP — big commanding layout */
