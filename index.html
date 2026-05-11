@@ -56,9 +56,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 4px;}
-.glass-center img{height:55px;width:auto;object-fit:contain;display:block;max-width:100%;}
-.glass-motto{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;text-align:center;max-width:160px;line-height:1.4;padding-right:0;}
+.glass-center{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;top:50%;transform:translateY(-50%);}
+.glass-center img{height:55px;width:auto;object-fit:contain;display:block;max-width:100%;pointer-events:auto;}
+.glass-motto{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;text-align:center;max-width:160px;line-height:1.4;padding-right:0;pointer-events:auto;}
 
 .glass-countdown{position:absolute;bottom:8px;right:12px;text-align:right;}
 .glass-countdown-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
