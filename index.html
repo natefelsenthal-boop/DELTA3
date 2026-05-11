@@ -79,7 +79,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   margin-top: 1px;
 }
 
-/* DESKTOP — big commanding layout */
 @media(min-width:700px){
   html,body{height:100%;overflow:hidden;}
   body{display:flex;flex-direction:column;}
@@ -88,26 +87,62 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 
   .glass-box{
     margin:28px 24px 16px;
-    padding:20px 32px 20px;
-    display:flex;
-    flex-direction:row;
-    align-items:stretch;
-    min-height:180px;
-    max-height:none;
+    padding:20px 32px;
+    /* SWITCH TO GRID FOR PERFECT CENTERING */
+    display: grid;
+    grid-template-columns: 180px 1fr 180px; 
+    align-items: center;
+    min-height: 200px;
+    max-height: none;
+    position: relative;
   }
 
-  .glass-scores{width:140px;gap:18px;margin-right:20px;}
+  .glass-scores{
+    grid-column: 1;
+    width: 100%;
+    gap: 18px;
+    margin-right: 0;
+  }
   .glass-score-label{font-size:10px;}
   .glass-score-bar{height:12px;}
 
-  .glass-center{gap:6px;}
-  .glass-center img{height:130px;}
-  .glass-motto{font-size:9px;max-width:320px;letter-spacing:2.5px;padding-right:70px;}
+  .glass-center {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 
-  .glass-countdown{bottom:14px;right:20px;}
+  .glass-center img {
+    height: 140px; 
+    width: auto;
+    display: block;
+  }
+
+  .glass-motto {
+    font-size: 10px;
+    max-width: 440px;
+    letter-spacing: 2.5px;
+    padding-right: 0; 
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    /* PULLS TEXT UP TO LOGO */
+    margin-top: -30px !important; 
+  }
+
+  .glass-countdown{
+    grid-column: 3;
+    position: static; /* Let grid handle placement */
+    text-align: right;
+  }
   .glass-countdown-num{font-size:44px;}
   .glass-countdown-label{font-size:8px;}
 
+  .glass-icon-btn{width:30px;height:30px;font-size:15px;}
+}
   .glass-icon-btn{width:30px;height:30px;font-size:15px;}
 }
 
