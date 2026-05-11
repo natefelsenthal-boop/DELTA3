@@ -791,44 +791,91 @@ function renderLift(){
   return h;
 }
 
-function toggleWorkout(id){expandedWorkout=expandedWorkout===id?null:id;render();}
-function logLift(dayId,idx,field,val){
-  if(!state.liftLogs[selectedDate])state.liftLogs[selectedDate]={};
-  if(!state.liftLogs[selectedDate][dayId])state.liftLogs[selectedDate][dayId]={};
-  if(!state.liftLogs[selectedDate][dayId][idx])state.liftLogs[selectedDate][dayId][idx]={s:'',r:'',w:'',u:'lb'};
-  state.liftLogs[selectedDate][dayId][idx][field]=val;
-  if(!state.liftTimestamps)state.liftTimestamps={};
-  if(val&&val!=='')state.liftTimestamps[dayId]=new Date().toISOString();
-  saveState();updateTopFrame();
+function logLift(dayId, idx, field, val) {
+  if (!state.liftLogs[selectedDate]) state.liftLogs[selectedDate] = {};
+  if (!state.liftLogs[selectedDate][dayId]) state.liftLogs[selectedDate][dayId] = {};
+  
+  // SNAPSHOT: Saves the name/goals so they survive if you delete the master exercise later
+  if (!state.liftLogs[selectedDate][dayId][idx]) {
+    const masterEx = state.lifts.find(d => d.id === dayId).exercises[idx];
+    state.liftLogs[selectedDate][dayId][idx] = {
+      name: masterEx.name,
+      sGoal: masterEx.sets,
+      rGoal: masterEx.reps,
+      s: '', r: '', w: '', u: 'lb'
+    };
+  }
+
+  state.liftLogs[selectedDate][dayId][idx][field] = val;
+  if (!state.liftTimestamps) state.liftTimestamps = {};
+  if (val && val !== '') state.liftTimestamps[dayId] = new Date().toISOString();
+  
+  saveState();
+  updateTopFrame();
 }
+  
 function toggleUnit(dayId,idx,cur){logLift(dayId,idx,'u',cur==='lb'?'kg':'lb');render();}
 function deleteExercise(dayId,exId){const d=state.lifts.find(x=>x.id===dayId);if(d)d.exercises=d.exercises.filter(e=>e.id!==exId);saveState();render();}
 function deleteWorkoutDay(id){state.lifts=state.lifts.filter(d=>d.id!==id);saveState();render();}
 
-function renderEating(){
-  const log=state.eatingLogs[selectedDate]||{};
-  let h=renderQuoteCard();
-  h+=`<div class="sec-hdr"><div class="sec-title">Eating Log</div><button class="add-btn" onclick="openModal('addRule')">+ Rule</button></div>`;
-  h+=`<div class="r-grid">`;
-  state.restrictions.forEach(r=>{
-    const s=log[r.id]||'none';
-    h+=`<div class="r-card${s==='good'?' good':s==='bad'?' bad':''}" onclick="toggleRestriction(${r.id})">
-      <span style="font-size:18px;">${s==='good'?'✅':s==='bad'?'❌':'⬜'}</span>
-      <div class="r-label">${r.name}</div>
+function renderEating() {
+  const log = state.eatingLogs[selectedDate] || {};
+  let h = renderQuoteCard();
+  h += `<div class="sec-hdr"><div class="sec-title">Eating Log</div><button class="add-btn" onclick="openModal('addRule')">+ Rule</button></div>`;
+  h += `<div class="r-grid">`;
+
+  state.restrictions.forEach(r => {
+    const logEntry = log[r.id] || {};
+    
+    // THE FIX: Check if logEntry is an object with a status, otherwise fallback to old string style
+    const s = typeof logEntry === 'string' ? logEntry : (logEntry.status || 'none');
+    const displayName = logEntry.name || r.name;
+
+    h += `<div class="r-card${s === 'good' ? ' good' : s === 'bad' ? ' bad' : ''}" onclick="toggleRestriction(${r.id})">
+      <span style="font-size:18px;">${s === 'good' ? '✅' : s === 'bad' ? '❌' : '⬜'}</span>
+      <div class="r-label">${displayName}</div>
       <button class="rdel" onclick="event.stopPropagation();deleteRestriction(${r.id})">✕</button>
     </div>`;
   });
-  h+=`</div><div class="sec-hdr"><div class="sec-title" style="font-size:16px;">Daily Notes</div></div>`;
-  h+=`<textarea class="notes-area" id="notesArea" placeholder="What did you eat? How do you feel?...">${log.notes||''}</textarea>`;
+
+  h += `</div><div class="sec-hdr"><div class="sec-title" style="font-size:16px;">Daily Notes</div></div>`;
+  h += `<textarea class="notes-area" id="notesArea" placeholder="What did you eat? How do you feel?...">${log.notes || ''}</textarea>`;
   return h;
 }
-function toggleRestriction(id){
-  if(!state.eatingLogs[selectedDate])state.eatingLogs[selectedDate]={notes:''};
-  const cur=state.eatingLogs[selectedDate][id]||'none';
-  state.eatingLogs[selectedDate][id]=cur==='none'?'good':cur==='good'?'bad':'none';
-  saveState();render();
+
+function toggleRestriction(id) {
+  if (!state.eatingLogs[selectedDate]) state.eatingLogs[selectedDate] = { notes: '' };
+  
+  const rule = state.restrictions.find(r => r.id === id);
+  const existingEntry = state.eatingLogs[selectedDate][id];
+
+  // SNAPSHOT LOGIC: If no log exists for today, create the object with the name saved
+  if (!existingEntry) {
+    state.eatingLogs[selectedDate][id] = { status: 'none', name: rule.name };
+  }
+
+  // Handle both old (string) and new (object) data formats
+  const cur = typeof state.eatingLogs[selectedDate][id] === 'string' 
+              ? state.eatingLogs[selectedDate][id] 
+              : state.eatingLogs[selectedDate][id].status;
+
+  const next = cur === 'none' ? 'good' : cur === 'good' ? 'bad' : 'none';
+  
+  // Save the result as an object so the name is permanently archived
+  state.eatingLogs[selectedDate][id] = { 
+    status: next, 
+    name: state.eatingLogs[selectedDate][id].name || rule.name 
+  };
+
+  saveState();
+  render();
 }
-function deleteRestriction(id){state.restrictions=state.restrictions.filter(r=>r.id!==id);saveState();render();}
+
+function deleteRestriction(id) {
+  state.restrictions = state.restrictions.filter(r => r.id !== id);
+  saveState();
+  render();
+}
 
 function renderWeight(){
   const entries=Object.entries(state.weightLog).sort((a,b)=>a[0].localeCompare(b[0]));
