@@ -420,6 +420,7 @@ body.dark .nav-btn{background:rgba(255,255,255,0.05);}
 <div class="toast" id="toast"></div>
 
 <script>
+let expandedWorkout = null;
 const TODAY=new Date();
 const START_DATE=new Date('2025-04-11');
 function fmtDate(d){return d.toISOString().slice(0,10);}
@@ -746,10 +747,14 @@ function renderLift(){
   let h=renderQuoteCard();
   h+=`<div class="sec-hdr"><div class="sec-title">Workout Log</div><button class="add-btn" onclick="openModal('addDay')">+ Add Day</button></div>`;
   if(!state.lifts.length)h+=`<div class="empty-state">No workouts yet.</div>`;
+  
   state.lifts.forEach(day=>{
-    const open=expandedWorkout===day.id;
+    // THE CLICK FIX: Use String() to make sure "shoulders" matches "shoulders" 
+    const open = expandedWorkout && String(expandedWorkout) === String(day.id);
+    
     const dayLogs=(state.liftLogs[selectedDate]&&state.liftLogs[selectedDate][day.id])||{};
     const isHit=isDayWorkoutHit(day.id,selectedDate);
+    
     h+=`<div class="workout-day${isHit?' hit':''}"><div class="wd-hdr" onclick="toggleWorkout('${day.id}')">
       <div>
         <div class="wd-title">${day.day}${isHit?' ✓':''}</div>
@@ -762,19 +767,28 @@ function renderLift(){
         <span class="chevron${open?' open':''}">▼</span>
       </div>
     </div>`;
+    
     if(open){
       h+=`<div class="wd-body">`;
       if(!day.exercises.length)h+=`<div style="padding:12px 0;color:var(--muted);font-size:12px;">No exercises. Tap "+ Ex".</div>`;
+      
       day.exercises.forEach((ex,idx)=>{
         const logged=dayLogs[idx]||{};
-        const sVal=logged.s!==undefined&&logged.s!==''?logged.s:ex.sets;
-        const rVal=logged.r!==undefined&&logged.r!==''?logged.r:ex.reps;
+        
+        // SNAPSHOT LOGIC: Use historical name/goals if they exist
+        const displayName = logged.name || ex.name;
+        const dSets = logged.sGoal || ex.sets;
+        const dReps = logged.rGoal || ex.reps;
+
+        const sVal=logged.s!==undefined&&logged.s!==''?logged.s:dSets;
+        const rVal=logged.r!==undefined&&logged.r!==''?logged.r:dReps;
         const wVal=logged.w||'';
         const uVal=logged.u||'lb';
         const prevWt=getLastWeight(day.id,idx);
+
         h+=`<div class="ex-row"><div class="ex-info">
-          <div class="ex-name">${ex.name}</div>
-          <div class="ex-meta">${ex.sets} sets × ${ex.reps} reps</div>
+          <div class="ex-name">${displayName}</div>
+          <div class="ex-meta">${dSets} sets × ${dReps} reps</div>
           <div class="ex-prev">${prevWt}</div>
         </div><div class="ex-inputs">
           <input class="ex-input" value="${sVal}" placeholder="S" oninput="logLift('${day.id}',${idx},'s',this.value)"/>
@@ -790,7 +804,12 @@ function renderLift(){
   });
   return h;
 }
-
+function toggleWorkout(id) {
+  // String() ensures that IDs like 'shoulders' match perfectly
+  expandedWorkout = String(expandedWorkout) === String(id) ? null : id;
+  render();
+}
+  
 function logLift(dayId, idx, field, val) {
   if (!state.liftLogs[selectedDate]) state.liftLogs[selectedDate] = {};
   if (!state.liftLogs[selectedDate][dayId]) state.liftLogs[selectedDate][dayId] = {};
@@ -1072,7 +1091,7 @@ LIFE: [One piece of genuine life/mindset advice relevant to where they are in th
 MOTTO: [New motivational motto in all caps, under 8 words]`;
 
   try{
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${state.apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${state.apiKey}`;
     const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
     const data=await res.json();
     if(data.error)throw new Error(data.error.message);
