@@ -99,10 +99,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     margin: 28px 24px 16px;
     padding: 20px 40px;
     display: grid;
+    /* Keeps the side columns empty so the logo has a dedicated center lane */
     grid-template-columns: 180px 1fr 180px; 
     align-items: center;
     min-height: 200px;
-    position: relative;
+    position: relative; /* REQUIRED for the absolute countdown */
   }
 
   .glass-scores {
@@ -122,13 +123,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     text-align: center;
   }
 
-.glass-center img {
-    height: 200px; 
+  .glass-center img {
+    height: 190px; 
     width: auto;
     display: block;
     margin: 0 auto;
-    /* PULLS THE LOGO UP */
-    margin-top: -20px; 
+    /* AGGRESSIVE PULL UP - counteracts image padding */
+    margin-top: -50px !important; 
   }
 
   .glass-motto {
@@ -138,19 +139,22 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     text-align: center;
     color: #fff;
     font-weight: 700;
-    /* SNAPS THE MOTTO TIGHTER TO THE LOGO */
-    margin-top: -55px !important; 
+    /* SNAPS TO BOTTOM OF LOGO */
+    margin-top: -70px !important; 
     padding-right: 0 !important;
   }
 
+  /* FIXES THE CORNER PLACEMENT */
   .glass-countdown {
     grid-column: 3;
-    position: static;
+    position: absolute !important; 
+    bottom: 18px;
+    right: 24px;
     text-align: right;
   }
 
-  .glass-countdown-num { font-size: 44px; }
-  .glass-countdown-label { font-size: 8px; }
+  .glass-countdown-num { font-size: 48px; line-height: 0.9; }
+  .glass-countdown-label { font-size: 9px; letter-spacing: 1px; }
   .glass-icon-btn { width: 30px; height: 30px; font-size: 15px; }
 }
 /* STOP REPLACING HERE */
