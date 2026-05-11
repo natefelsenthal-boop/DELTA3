@@ -56,28 +56,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
 .glass-score-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:3px;overflow:hidden;}
 .glass-score-fill{height:100%;border-radius:3px;transition:width 0.4s;background:rgba(255,255,255,0.7);}
 
-.glass-countdown {
-  position: absolute !important;
-  bottom: 12px;
-  right: 20px;
-  text-align: right;
-  z-index: 10;
-}
+.glass-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 4px;}
+.glass-center img{height:55px;width:auto;object-fit:contain;display:block;max-width:100%;}
+.glass-motto{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;font-weight:500;text-align:center;max-width:160px;line-height:1.4;padding-right:0;}
 
-.glass-countdown-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 44px !important; /* Makes the "10" big and bold */
-  color: #ffffff !important;
-  line-height: 0.9;
-}
-
-.glass-countdown-label {
-  font-size: 8px !important;
-  color: rgba(255, 255, 255, 0.75) !important;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 1px;
-}
+.glass-countdown{position:absolute;bottom:8px;right:12px;text-align:right;}
+.glass-countdown-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1;text-shadow:0 2px 12px rgba(37,99,235,0.3);}
+.glass-countdown-label{font-size:6px;color:rgba(255,255,255,0.75);letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:1px;}
 
 @media(min-width:700px){
   html,body{height:100%;overflow:hidden;}
@@ -85,26 +70,23 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
   .top-frame{flex-shrink:0;position:static;}
   .main{flex:1;overflow-y:auto;padding:16px 20px 80px;}
 
-  .glass-box{
-    margin:28px 24px 16px;
-    padding:20px 32px;
-    /* SWITCH TO GRID FOR PERFECT CENTERING */
+  .glass-box {
+    margin: 28px 24px 16px;
+    padding: 20px 40px;
     display: grid;
     grid-template-columns: 180px 1fr 180px; 
     align-items: center;
     min-height: 200px;
-    max-height: none;
     position: relative;
   }
 
-  .glass-scores{
+  .glass-scores {
     grid-column: 1;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     gap: 18px;
-    margin-right: 0;
   }
-  .glass-score-label{font-size:10px;}
-  .glass-score-bar{height:12px;}
 
   .glass-center {
     grid-column: 2;
@@ -125,25 +107,37 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;dis
     font-size: 10px;
     max-width: 440px;
     letter-spacing: 2.5px;
-    padding-right: 0; 
     text-align: center;
     color: #fff;
     font-weight: 700;
-    /* PULLS TEXT UP TO LOGO */
     margin-top: -30px !important; 
+    padding-right: 0 !important;
   }
 
-  .glass-countdown{
+  .glass-countdown {
     grid-column: 3;
-    position: static; /* Let grid handle placement */
     text-align: right;
   }
-  .glass-countdown-num{font-size:44px;}
-  .glass-countdown-label{font-size:8px;}
 
-  .glass-icon-btn{width:30px;height:30px;font-size:15px;}
+  .glass-countdown-num { font-size: 44px; }
+  .glass-countdown-label { font-size: 8px; }
+  .glass-icon-btn { width: 30px; height: 30px; font-size: 15px; }
 }
-  .glass-icon-btn{width:30px;height:30px;font-size:15px;}
+
+/* FIXES THE WEIRD DATE THING — SNAP TO LEFT */
+.month-year-display {
+  padding: 12px 24px 2px !important;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 24px !important;
+  text-align: left !important;
+  color: var(--accent) !important;
+}
+
+.date-strip-wrap {
+  display: flex !important;
+  padding: 8px 24px 14px !important;
+  justify-content: flex-start !important;
+  overflow-x: auto;
 }
 
 /* DATE STRIP */
