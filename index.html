@@ -481,15 +481,59 @@ lifts:[
   proudLog:{},photos:[],wins:[],liftTimestamps:{},aiSections:{},todos:[],
 };
 
-let state=JSON.parse(JSON.stringify(DEFAULT_STATE));
-function loadState(){
-  try{const s=localStorage.getItem('delta3_v2');if(s){const p=JSON.parse(s);state=Object.assign({},DEFAULT_STATE,p);}}catch(e){}
-  if(state.darkMode)document.body.classList.add('dark');
+// 1. CLOUD SETTINGS
+const BIN_ID = '6a034356250b1311c33cd80d'; 
+const MASTER_KEY = 'PASTE_YOUR_MASTER_KEY_HERE'; 
+
+let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+// 2. THE SYNC LOGIC
+async function loadState() {
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': MASTER_KEY }
+    });
+    const data = await res.json();
+    
+    if (data.record && data.record.habits) {
+      state = Object.assign({}, DEFAULT_STATE, data.record);
+      console.log("Cloud data synced.");
+    } else {
+      // Use device data if cloud is empty
+      const local = localStorage.getItem('delta3_v2');
+      if (local) state = JSON.parse(local);
+      saveState(); 
+    }
+    
+    if (state.darkMode) document.body.classList.add('dark');
+    render(); 
+  } catch (e) {
+    const s = localStorage.getItem('delta3_v2');
+    if (s) state = JSON.parse(s);
+    render();
+  }
 }
-function saveState(){try{localStorage.setItem('delta3_v2',JSON.stringify(state));}catch(e){}}
+
+async function saveState() {
+  localStorage.setItem('delta3_v2', JSON.stringify(state));
+  try {
+    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': MASTER_KEY
+      },
+      body: JSON.stringify(state)
+    });
+  } catch (e) {
+    console.error("Cloud Save Failed:", e);
+  }
+}
+
+// 3. RUN ON STARTUP
 loadState();
 
-let currentTab='habits',selectedDate=fmtDate(TODAY),expandedWorkout=null;
+let currentTab = 'habits', selectedDate = fmtDate(TODAY), expandedWorkout = null;
 
 function getCountdown(){const g=new Date(state.goalDate);return Math.max(0,Math.ceil((g-new Date())/86400000));}
 function getProgress(){const g=new Date(state.goalDate),n=new Date();return Math.min(100,Math.max(0,((n-START_DATE)/(g-START_DATE))*100)).toFixed(1);}
